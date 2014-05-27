@@ -1,11 +1,11 @@
-window.Tracker = (function() {
+window.Boba = (function() {
   var defaults = {
     pageName: "page",
     siteName: "site"
   };
 
-  function Tracker(opts) {
-    this.ga = Tracker.getGA();
+  function Boba(opts) {
+    this.ga = Boba.getGA();
     if (typeof this.ga !== "undefined") {
       // Extend defaults with options.
       this.opts = $.extend(defaults, opts);
@@ -25,7 +25,7 @@ window.Tracker = (function() {
       this.watch = $.proxy(this.watch, this);
       this._onTrackedClick = $.proxy(this._onTrackedClick, this);
     } else {
-      console.warn("Google Analytics not found. Tracker could not initialize.");
+      console.warn("Google Analytics not found. Boba could not initialize.");
     }
 
     // For chainability.
@@ -37,7 +37,7 @@ window.Tracker = (function() {
   // Prototype methods.
   //
 
-  Tracker.prototype = {
+  Boba.prototype = {
     watch: function watch(eventType, selector, func) {
       trackingFuction = function(event) {
         this.push(func(event));
@@ -55,8 +55,8 @@ window.Tracker = (function() {
       return this;
     },
 
-    push: function trackerInstancePush(data) {
-      Tracker.push(this.ga, data);
+    push: function bobaInstancePush(data) {
+      Boba.push(this.ga, data);
       return this;
     },
 
@@ -93,14 +93,14 @@ window.Tracker = (function() {
   //
 
   // Replaces non-word characters and spaces with underscores.
-  Tracker.cleanValue = function cleanValue(value) {
+  Boba.cleanValue = function cleanValue(value) {
     return value
       .replace(/\W+/g, "_")
       .replace(/_+/g, "_")
       .toLowerCase();
   };
 
-  Tracker.getGA = function getGA() {
+  Boba.getGA = function getGA() {
     var ga;
     if (typeof window.ga !== "undefined" && window.ga !== null) {
       ga = $.proxy(window.ga, window, "send", "event");
@@ -114,7 +114,7 @@ window.Tracker = (function() {
     return ga;
   };
 
-  Tracker.push = function trackerPush(ga, data) {
+  Boba.push = function bobaPush(ga, data) {
     data = [
       data.category || data.gaCategory || "category",
       data.action || data.gaAction || "action",
@@ -123,5 +123,5 @@ window.Tracker = (function() {
     ga.apply(null, data);
   };
 
-  return Tracker;
+  return Boba;
 }());
