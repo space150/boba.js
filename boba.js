@@ -39,13 +39,13 @@ window.Boba = (function() {
 
   Boba.prototype = {
     watch: function watch(eventType, selector, func) {
-      trackingFuction = function(event) {
+      var trackingFunction = function(event) {
         this.push(func(event));
       };
       $("body").on(
         eventType + ".tracker",
         selector,
-        $.proxy(trackingFuction, this)
+        $.proxy(trackingFunction, this)
       );
       return this;
     },
@@ -119,7 +119,7 @@ window.Boba = (function() {
       data.category || data.gaCategory || "category",
       data.action || data.gaAction || "action",
       data.label || data.gaLabel || "label"
-    ]
+    ];
     ga.apply(null, data);
   };
 
