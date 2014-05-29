@@ -89,7 +89,7 @@ window.Boba = (function() {
 
     _onTrackedClick: function trackClick(event) {
       if (this.ga) {
-        return $(event.target).data();
+        return $(event.currentTarget).data();
       }
     }
   };
