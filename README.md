@@ -140,3 +140,8 @@ This can be used to push data manually.
 #### push
 
 `Boba.push`
+
+
+## Contributing
+
+See [the contributing guide](CONTRIBUTING.md).
