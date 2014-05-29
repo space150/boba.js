@@ -40,6 +40,20 @@ tracker = new Boba({
 })
 ```
 
+#### defaultCategory, defaultAction, defaultLabel
+
+Default: `null`
+
+The defaults for the category, action, and label.
+
+Example:
+
+```js
+tracker = new Boba({
+  defaultCategory: "myCategory"
+})
+```
+
 #### watch
 
 Default: `[]`
@@ -89,7 +103,8 @@ the following:
 }
 ```
 
-The supplied values are also the defaults.
+Any values not supplied will use defaults from the options (e.g.
+tracker.options.defaultCategory). These default to null.
 
 #### trackLinks
 
@@ -127,6 +142,7 @@ This can be used to push data manually.
 
 `tracker.getSiteName`
 
+
 ### Class methods
 
 #### cleanValue
@@ -136,10 +152,6 @@ This can be used to push data manually.
 #### getGA
 
 `Boba.getGA`
-
-#### push
-
-`Boba.push`
 
 
 ## Contributing

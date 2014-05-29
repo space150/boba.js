@@ -1,7 +1,10 @@
 window.Boba = (function() {
   var defaults = {
     pageName: "page",
-    siteName: "site"
+    siteName: "site",
+    defaultCategory: null,
+    defaultAction: null,
+    defaultLabel: null
   };
 
   function Boba(opts) {
@@ -28,13 +31,12 @@ window.Boba = (function() {
       console.warn("Google Analytics not found. Boba could not initialize.");
     }
 
-    // For chainability.
     return this;
   }
 
 
   //
-  // Prototype methods.
+  // Instance methods.
   //
 
   Boba.prototype = {
@@ -56,7 +58,12 @@ window.Boba = (function() {
     },
 
     push: function bobaInstancePush(data) {
-      Boba.push(this.ga, data);
+      data = [
+        data.gaCategory || data.category || this.opts.defaultCategory,
+        data.gaAction   || data.action   || this.opts.defaultAction,
+        data.gaLabel    || data.label    || this.opts.defaultLabel
+      ]
+      this.ga.apply(null, data);
       return this;
     },
 
@@ -69,6 +76,7 @@ window.Boba = (function() {
     getPageName: function getPageName() {
       return this._pageName;
     },
+
     // Get and set site name.
     setSiteName: function setSiteName(name) {
       this._siteName = name;
@@ -79,7 +87,6 @@ window.Boba = (function() {
     },
 
 
-    // "Private" methods.
     _onTrackedClick: function trackClick(event) {
       if (this.ga) {
         return $(event.target).data();
@@ -100,6 +107,7 @@ window.Boba = (function() {
       .toLowerCase();
   };
 
+  // Constructs a Google Analytics function.
   Boba.getGA = function getGA() {
     var ga;
     if (typeof window.ga !== "undefined" && window.ga !== null) {
@@ -112,15 +120,6 @@ window.Boba = (function() {
       };
     }
     return ga;
-  };
-
-  Boba.push = function bobaPush(ga, data) {
-    data = [
-      data.category || data.gaCategory || "category",
-      data.action || data.gaAction || "action",
-      data.label || data.gaLabel || "label"
-    ];
-    ga.apply(null, data);
   };
 
   return Boba;
