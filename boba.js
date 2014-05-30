@@ -111,12 +111,18 @@ window.Boba = (function() {
   Boba.getGA = function getGA() {
     var ga;
     if (typeof window.ga !== "undefined" && window.ga !== null) {
-      ga = $.proxy(window.ga, window, "send", "event");
+      ga = function gapush() {
+        // Prepend "send" and "event" to the array and push it.
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift("send", "event");
+        window.ga.apply(window, args);
+      };
     } else if (typeof window._gaq !== "undefined" && window._gaq !== null) {
       ga = function gaqpush() {
         // Prepend "_trackEvent" to the array and push it.
-        Array.prototype.unshift.call(arguments, "_trackEvent");
-        window._gaq.push(arguments);
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift("_trackEvent");
+        window._gaq.push.apply(window, args);
       };
     }
     return ga;
