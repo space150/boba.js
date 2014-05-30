@@ -8,7 +8,7 @@ window.Boba = (function() {
   };
 
   function Boba(opts) {
-    this.ga = Boba.getGA();
+    this.ga = this._getGA();
     if (typeof this.ga !== "undefined") {
       // Extend defaults with options.
       this.opts = $.extend(defaults, opts);
@@ -20,8 +20,8 @@ window.Boba = (function() {
         };
       }
 
-      this.setPageName(this.opts.pageName);
-      this.setSiteName(this.opts.siteName);
+      this.pageName = this.opts.pageName;
+      this.siteName = this.opts.siteName;
 
       this.trackLinks = $.proxy(this.trackLinks, this);
       this.push = $.proxy(this.push, this);
@@ -52,8 +52,9 @@ window.Boba = (function() {
       return this;
     },
 
-    trackLinks: function trackLinks() {
-      this.watch('click', '.js-track', this._onTrackedClick);
+    trackLinks: function trackLinks(selector) {
+      selector ||= '.js-track';
+      this.watch('click', selector, this._onTrackedClick);
       return this;
     },
 
@@ -62,71 +63,40 @@ window.Boba = (function() {
         data.gaCategory || data.category || this.opts.defaultCategory,
         data.gaAction   || data.action   || this.opts.defaultAction,
         data.gaLabel    || data.label    || this.opts.defaultLabel
-      ]
+      ];
       this.ga.apply(null, data);
       return this;
     },
-
-
-    // Get and set page name.
-    setPageName: function setPageName(name) {
-      this._pageName = name;
-      return this;
-    },
-    getPageName: function getPageName() {
-      return this._pageName;
-    },
-
-    // Get and set site name.
-    setSiteName: function setSiteName(name) {
-      this._siteName = name;
-      return this;
-    },
-    getSiteName: function getSiteName() {
-      return this._siteName;
-    },
-
 
     _onTrackedClick: function trackClick(event) {
       if (this.ga) {
         return $(event.currentTarget).data();
       }
+    },
+
+    // Constructs a Google Analytics function.
+    _getGA: function getGA() {
+      var ga;
+      if (typeof window.ga !== "undefined" && window.ga !== null) {
+        ga = function gapush() {
+          // Prepend "send" and "event" to the array and push it.
+          var args = Array.prototype.slice.call(arguments);
+          args.unshift("send", "event");
+          window.ga.apply(window, args);
+        };
+      } else if (typeof window._gaq !== "undefined" && window._gaq !== null) {
+        ga = function gaqpush() {
+          // Prepend "_trackEvent" to the array and push it.
+          var args = Array.prototype.slice.call(arguments);
+          args.unshift("_trackEvent");
+          window._gaq.push.apply(window, args);
+        };
+      }
+      return ga;
     }
   };
 
 
-  //
-  // Class methods.
-  //
-
-  // Replaces non-word characters and spaces with underscores.
-  Boba.cleanValue = function cleanValue(value) {
-    return value
-      .replace(/\W+/g, "_")
-      .replace(/_+/g, "_")
-      .toLowerCase();
-  };
-
-  // Constructs a Google Analytics function.
-  Boba.getGA = function getGA() {
-    var ga;
-    if (typeof window.ga !== "undefined" && window.ga !== null) {
-      ga = function gapush() {
-        // Prepend "send" and "event" to the array and push it.
-        var args = Array.prototype.slice.call(arguments);
-        args.unshift("send", "event");
-        window.ga.apply(window, args);
-      };
-    } else if (typeof window._gaq !== "undefined" && window._gaq !== null) {
-      ga = function gaqpush() {
-        // Prepend "_trackEvent" to the array and push it.
-        var args = Array.prototype.slice.call(arguments);
-        args.unshift("_trackEvent");
-        window._gaq.push.apply(window, args);
-      };
-    }
-    return ga;
-  };
 
   return Boba;
 }());

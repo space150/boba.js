@@ -1,6 +1,4 @@
-# boba.js
-
-## API
+# Boba.js
 
 Create a new instance of Boba
 
@@ -10,57 +8,42 @@ tracker = new Boba
 
 ### Constructor options
 
-All options are optional.
+| option            | default  |
+| ----------------- | -------- |
+| `siteName`        | `'site'` |
+| `pageName`        | `'page'` |
+| `defaultCategory` | `null`   |
+| `defaultAction`   | `null`   |
+| `defaultLabel`    | `null`   |
+| `watch`           | none     |
 
-#### siteName
-
-Default: `'site'`
-
-The name of the site.
-
-Example:
-
-```js
-tracker = new Boba({
-  siteName: 'space150'
-})
-```
-
-You can also get and set `tracker.siteName`.
-
-#### pageName
-
-Default: `'page'`
-
-The name of the page.
-
-Example:
+#### Options Example:
 
 ```js
 tracker = new Boba({
-  pageName: 'about'
+  siteName: 'Mandalore',
+  pageName: 'Slave I',
+  defaultCategory: 'category',
+  defaultAction: 'action',
+  defaultLabel: 'label',
+  watch: [
+    ['click', '.js-track-foo', trackFoo],
+    ['click', '.js-track-bar', trackBar]
+  ]
 })
 ```
 
-You can also get and set `tracker.siteName`.
+#### siteName, pageName
+
+The name of the site and page, respectively.
+
+You can also get and set `tracker.siteName` and `tracker.pageName` at any time.
+
 
 #### defaultCategory, defaultAction, defaultLabel
 
-Default: `null`
-
-The defaults for the category, action, and label.
-
-Example:
-
-```js
-tracker = new Boba({
-  defaultCategory: "myCategory",
-  defaultAction: "myAction",
-  defaultLabel: "myLabel"
-})
-```
-
-If you pass an object to boba#push that does not have a category, action, or label, these values will be used instead.
+If an event does not have a category, action, or label, these values will be
+used instead.
 
 You can also change these at any time:
 
@@ -70,29 +53,19 @@ tracker.defaultCategory = "Solo"
 
 #### watch
 
-Default: `[]`
+An array of arguments to apply to the `watch` method on initialization.
 
-An array of arguments to apply to Boba's `watch` method on
-initialization.
+See the Options Example above.
 
-Example:
-
-```js
-tracker = new Boba({
-  watch: [
-    ['click', '.js-track-foo', trackFoo],
-    ['click', '.js-track-bar', trackBar]
-  ]
-})
-```
 
 ### Instance methods
 
-#### watch
+#### Boba#watch
 
 `tracker.watch(eventType, selector, callback)`
 
-This is basically syntactic sugar for:
+This is sets up delegated event handlers for you. Under the hood, it does
+something like this:
 
 ```js
 $('body').on(eventType, selector, function(event) {
@@ -100,10 +73,11 @@ $('body').on(eventType, selector, function(event) {
 }
 ```
 
-Example:
+Examples:
 
 ```js
-tracker.watch('select', '.js-track-select', trackSelect)
+tracker.watch('click', '.js-track', trackClick)
+tracker.watch('change', '.js-track-select', trackSelect)
 ```
 
 The callback is passed a jQuery event object and should return an object with `category`, `action`, and `label` properties:
@@ -119,11 +93,9 @@ The callback is passed a jQuery event object and should return an object with `c
 Any values not supplied will use defaults from the options (e.g.
 `tracker.options.defaultCategory`).
 
-#### trackLinks
+#### Boba#trackLinks
 
-`tracker.trackLinks`
-
-This is helper that basically does this:
+This is a helper that basically does this:
 
 ```js
 tracker.watch('click', '.js-track', function (event) {
@@ -131,33 +103,33 @@ tracker.watch('click', '.js-track', function (event) {
 })
 ```
 
-You can use these data attributes to set the category, action, and label when using this method:
+You can use these data attributes to set the category, action, and label when
+using this method:
 
 - `data-ga-category`
 - `data-ga-action`
 - `data-ga-label`
 
-#### push
+You can pass in an alternate selector if you don't want to use '.js-track'. For
+example, you could use a data attribute if you don't want to you a class:
 
-`tracker.push`
+```js
+tracker.trackLinks('[data-ga-track]')
+```
 
-This can be used to push data manually.
+#### Boba#push
+
+This can be used to fire events manually.
 
 Example:
 
 ```js
-tracker.push("category", "action", "label")
+tracker.push({
+  category: "category",
+  action: "action",
+  label: "label"
+})
 ```
-
-### Class methods
-
-#### cleanValue
-
-`Boba.cleanValue`
-
-#### getGA
-
-`Boba.getGA`
 
 
 ## Contributing
