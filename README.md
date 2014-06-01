@@ -111,7 +111,7 @@ using this method:
 - `data-ga-label`
 
 You can pass in an alternate selector if you don't want to use '.js-track'. For
-example, you could use a data attribute if you don't want to you a class:
+example, you could use a data attribute if you don't want to use a class:
 
 ```js
 tracker.trackLinks('[data-ga-track]')
