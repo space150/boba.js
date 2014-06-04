@@ -1,4 +1,4 @@
-window.Boba = (function() {
+Boba = (function() {
   var defaults = {
     pageName: "page",
     siteName: "site",
