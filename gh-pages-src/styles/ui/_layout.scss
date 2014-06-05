@@ -2,36 +2,9 @@
     $LAYOUT
 \*------------------------------------*/
 
-body {
-  margin: 0 auto;
-  max-width: 1440px;
-
-  // min-width for non-responsive layouts
-  .lt-ie9 & {
-    min-width: 1024px;
-  }
-}
-
 .container {
-  width: 100%;
+  width: 98%;
+  max-width: 960px;
   margin: 0 auto;
   padding: 0;
-  @include box-sizing(border-box);
-
-  @include media-query(hand-and-up) {
-    width: 90%;
-  }
-
-  @include media-query(desk-and-up) {
-    max-width: 1200px;
-  }
-
-  @include media-query(hand-and-down) {
-    padding: 0 $base-spacing-unit;
-  }
-
-  // max-width for non-responsive layouts
-  .lt-ie9 & {
-    max-width: 1200px;
-  }
 }

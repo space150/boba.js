@@ -14,8 +14,8 @@ $responsive-push-pull: false;
 $global-border-box: true;
 
 // Base measurements
-$base-font-size:       15px;
-$base-line-height:     25px;
+$base-font-size:       18px;
+$base-line-height:     26px;
 
 // Calculated measurements
 $base-spacing-unit: $base-line-height;
@@ -34,16 +34,20 @@ $wall-start:   1200px;
 
 // Colors
 $black:        #000;
-$grayDark:     #4c4c4c;
+$dark-gray:    #4c4c4c;
 $gray:         #999;
-$grayLight:    #f0f0f0;
+$light-gray:   #efefef;
 $white:        #fff;
 
-$primary:      darkgreen; // dark green
-$secondary:    tan; // tan
+$primary:      #425a37; // dark green
+$secondary:    #daa520; // goldenrod
+$tertiary:     #dcdcdc;
+
+
 // $tertiary:     #4f2683; // purple
 // $quaternary:   #fff5a9; // yellow
 // quinary, senary, septenary, octonary, nonary, denary
 
 // Fonts
 $font-body:  Helvetica, Arial, sans-serif;
+$font-code: monospace;

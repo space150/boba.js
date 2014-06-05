@@ -6,7 +6,17 @@ var gulp = require("gulp"),
   markdown = require("gulp-markdown"),
   merge = require("merge-stream"),
   path = require("path"),
-  removeLines = require("gulp-remove-lines");
+  removeLines = require("gulp-remove-lines"),
+
+  paths = {
+    ghPagesIndex: [
+      "./gh-pages-src/top.html",
+      "./tmp/README.html",
+      "./gh-pages-src/bottom.html"
+    ]
+  },
+
+  watcherLogger;
 
 gulp.task("boba-js", function() {
   return gulp.src("./boba.js")
@@ -53,7 +63,7 @@ gulp.task("compass", function() {
 });
 
 gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
-  return gulp.src(["./gh-pages-src/top.html", "./tmp/README.html", "./gh-pages-src/bottom.html"])
+  return gulp.src(paths.ghPagesIndex)
     .pipe(concat("index.html"))
     .pipe(gulp.dest("./gh-pages"));
 });
@@ -66,4 +76,21 @@ gulp.task("gh-pages", ["default"], function() {
   return gulp.src("./gh-pages/**/*")
     .pipe(deploy());
 });
+
+
+watcherLogger = function watcherLogger(event) {
+  console.log(
+    "File " + event.path + " was " + event.type + ", running tasks..."
+  );
+};
+
+gulp.task("watch", function() {
+  console.log("Watching for changes...");
+
+  gulp.watch(paths.ghPagesIndex, ["gh-pages-index"])
+    .on("change", watcherLogger);
+
+  gulp.watch("./gh-pages-src/styles/**/*.scss", ["compass"])
+    .on("change", watcherLogger);
+})
 
