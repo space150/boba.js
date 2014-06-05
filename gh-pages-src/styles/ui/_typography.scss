@@ -1,0 +1,55 @@
+/*------------------------------------*\
+    $TYPOGRAPHY
+\*------------------------------------*/
+
+html {
+  font: #{($base-font-size/16px)*1em}/#{$line-height-ratio} $font-body;
+  color: $black;
+  background: $white;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+i {
+  font-style: normal;
+}
+
+h1, .h1 {
+  @include rem(font-size, 30px);
+  line-height: 1;
+}
+h2, .h2 {
+  @include rem(font-size, 16px);
+  line-height: 1.2;
+}
+h3, .h3 {
+  @include rem(font-size, 14px);
+  line-height: 1.4;
+}
+h4, .h4 {
+  @include rem(font-size, 12px);
+}
+
+@include media-query(lap-and-up) {
+
+  h1, .h1 {
+    @include rem(font-size, 54px);
+  }
+  h2, .h2 {
+    @include rem(font-size, 36px);
+  }
+  h3, .h3 {
+    @include rem(font-size, 22px);
+  }
+  h4, .h4 {
+    @include rem(font-size, 18px);
+  }
+
+}

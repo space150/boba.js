@@ -1,0 +1,29 @@
+/*------------------------------------*\
+    $BUTTONS
+\*------------------------------------*/
+
+.btn {
+  margin: 0;
+  padding: 0.4em 1em;
+  line-height: 1.6em;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  border: 1px solid $gray;
+  cursor: pointer;
+  @include inline-block;
+  @include rem(font-size, $base-font-size);
+  @include border-radius(0);
+
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed;
+    @include opacity(.65);
+  }
+}

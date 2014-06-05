@@ -1,0 +1,122 @@
+/*------------------------------------*\
+    $WIDTHS
+\*------------------------------------*/
+
+@mixin grid-setup($namespace: "") {
+
+  // Whole
+  .#{$namespace}one-whole { width: 100%; }
+
+  // Halves
+  .#{$namespace}one-half,
+  .#{$namespace}two-quarters,
+  .#{$namespace}three-sixths,
+  .#{$namespace}four-eighths,
+  .#{$namespace}five-tenths,
+  .#{$namespace}six-twelfths { width: 50%; }
+
+  // Thirds
+  .#{$namespace}one-third,
+  .#{$namespace}two-sixths,
+  .#{$namespace}four-twelfths { width: 33.333%; }
+
+  .#{$namespace}two-thirds,
+  .#{$namespace}four-sixths,
+  .#{$namespace}eight-twelfths { width: 66.666%; }
+
+  // Quarters
+  .#{$namespace}one-quarter,
+  .#{$namespace}two-eighths,
+  .#{$namespace}three-twelfths { width: 25%; }
+
+  .#{$namespace}three-quarters,
+  .#{$namespace}six-eighths,
+  .#{$namespace}nine-twelfths { width: 75%; }
+
+  // Fifths
+  .#{$namespace}one-fifth,
+  .#{$namespace}two-tenths { width: 20%; }
+
+  .#{$namespace}two-fifths,
+  .#{$namespace}four-tenths { width: 40%; }
+
+  .#{$namespace}three-fifths,
+  .#{$namespace}six-tenths { width: 60%; }
+
+  .#{$namespace}four-fifths,
+  .#{$namespace}eight-tenths { width: 80%; }
+
+  // Sixths
+  .#{$namespace}one-sixth,
+  .#{$namespace}two-twelfths { width: 16.666%; }
+
+  .#{$namespace}five-sixths,
+  .#{$namespace}ten-twelfths { width: 83.333%; }
+
+  // Eighths
+  .#{$namespace}one-eighth { width: 12.5%; }
+  .#{$namespace}three-eighths { width: 37.5%; }
+  .#{$namespace}five-eighths { width: 62.5%; }
+  .#{$namespace}seven-eighths { width: 87.5%; }
+
+  // Tenths
+  .#{$namespace}one-tenth { width: 10%; }
+  .#{$namespace}three-tenths { width: 30%; }
+  .#{$namespace}seven-tenths { width: 70%; }
+  .#{$namespace}nine-tenths { width: 90%; }
+
+  // Twelfths
+  .#{$namespace}one-twelfth { width: 8.333%; }
+  .#{$namespace}five-twelfths { width: 41.666% }
+  .#{$namespace}seven-twelfths { width: 58.333%; }
+  .#{$namespace}eleven-twelfths { width: 91.666%; }
+}
+
+//
+// Responsive widths w/breakpoint namespace
+//
+// If you have set `$responsive` to ‘true’ in `_vars.scss` then you can define at
+// which breakpoint you’d like an element to be a certain size, e.g.:
+//
+// <div class="g one-quarter lap-one-half palm-one-whole"> ... </div>
+//
+// This would create a `div` that, at ‘desktop’ sizes, takes up a quarter of the
+// horizontal space, a half of that space at ‘tablet’ sizes, and goes full width
+// at ‘mobile’ sizes.
+//
+// If `$responsive` is ‘false’ then the grid would only be used at laptop sizes and above.
+//
+
+@if $responsive == true {
+  @include grid-setup();
+
+  @if $hand-start != false {
+    @include media-query("hand-and-up"){
+      @include grid-setup("hand-");
+    }
+  }
+
+  @if $lap-start != false {
+    @include media-query("lap-and-up"){
+      @include grid-setup("lap-");
+    }
+  }
+
+  @if $desk-start != false {
+    @include media-query("desk-and-up"){
+      @include grid-setup("desk-");
+    }
+  }
+
+  @if $wall-start != false {
+    @include media-query("wall-and-up"){
+      @include grid-setup("wall-");
+    }
+  }
+}
+@else {
+  @include media-query("lap-and-up"){
+    // Initializes widths w/o namespace
+    @include grid-setup();
+  }
+}

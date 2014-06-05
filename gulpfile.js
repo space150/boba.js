@@ -1,9 +1,11 @@
 var gulp = require("gulp"),
   clean = require("gulp-clean"),
+  compass = require("gulp-compass"),
   concat = require("gulp-concat"),
   deploy = require("gulp-gh-pages"),
   markdown = require("gulp-markdown"),
   merge = require("merge-stream"),
+  path = require("path"),
   removeLines = require("gulp-remove-lines");
 
 gulp.task("boba-js", function() {
@@ -37,6 +39,19 @@ gulp.task("gh-pages-readme", function() {
     .pipe(gulp.dest("./tmp"));
 });
 
+gulp.task("compass", function() {
+  return gulp.src("./gh-pages-src/styles/**/*.scss")
+    .pipe(compass({
+      project: path.join(__dirname, '/'),
+      css: "gh-pages",
+      sass: "gh-pages-src/styles",
+      style: "compressed",
+      relative: true,
+      comments: false
+    }))
+    .pipe(gulp.dest("./tmp/"));
+});
+
 gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
   return gulp.src(["./gh-pages-src/top.html", "./tmp/README.html", "./gh-pages-src/bottom.html"])
     .pipe(concat("index.html"))
@@ -45,7 +60,7 @@ gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
 
 gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 
-gulp.task("default", ["clean", "build-js", "gh-pages-index"]);
+gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index"]);
 
 gulp.task("gh-pages", ["default"], function() {
   return gulp.src("./gh-pages/**/*")

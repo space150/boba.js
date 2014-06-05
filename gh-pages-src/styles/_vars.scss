@@ -1,0 +1,49 @@
+/*------------------------------------*\
+    $VARIABLES
+\*------------------------------------*/
+
+// Include push/pull styles?
+$push: false;
+$pull: false;
+
+// Include responsive grid widths w/breakpoint namespace?
+$responsive: true;
+$responsive-push-pull: false;
+
+// All elements to adopt box-sizing:border-box;?
+$global-border-box: true;
+
+// Base measurements
+$base-font-size:       15px;
+$base-line-height:     25px;
+
+// Calculated measurements
+$base-spacing-unit: $base-line-height;
+$half-spacing-unit: $base-spacing-unit / 2;
+$line-height-ratio: $base-line-height / $base-font-size;
+
+// Grid
+$gutter: $base-spacing-unit;
+
+// Breakpoints
+// Set to false to exclude breakpoints
+$hand-start:   480px;
+$lap-start:    768px;
+$desk-start:   1024px;
+$wall-start:   1200px;
+
+// Colors
+$black:        #000;
+$grayDark:     #4c4c4c;
+$gray:         #999;
+$grayLight:    #f0f0f0;
+$white:        #fff;
+
+$primary:      darkgreen; // dark green
+$secondary:    tan; // tan
+// $tertiary:     #4f2683; // purple
+// $quaternary:   #fff5a9; // yellow
+// quinary, senary, septenary, octonary, nonary, denary
+
+// Fonts
+$font-body:  Helvetica, Arial, sans-serif;
