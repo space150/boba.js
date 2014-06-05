@@ -24,7 +24,7 @@ gulp.task("boba-js", function() {
     .pipe(removeLines({filters: [
       /module.exports/
     ]}))
-    .pipe(gulp.dest("./gh-pages"));
+    .pipe(gulp.dest("./site"));
 });
 
 gulp.task("boba-browserify-js", function() {
@@ -33,12 +33,12 @@ gulp.task("boba-browserify-js", function() {
       /window.Boba/
     ]}))
     .pipe(rename("boba-browserify.js"))
-    .pipe(gulp.dest("./gh-pages"));
+    .pipe(gulp.dest("./site"));
 });
 
 gulp.task("clean", function() {
   return merge(
-    gulp.src("./gh-pages/**/*", {read: false})
+    gulp.src("./site/**/*", {read: false})
       .pipe(clean()),
     gulp.src("./tmp", {read: false})
       .pipe(clean())
@@ -60,7 +60,7 @@ gulp.task("compass", function() {
   return gulp.src("./gh-pages-src/styles/**/*.scss")
     .pipe(compass({
       project: path.join(__dirname, '/'),
-      css: "gh-pages",
+      css: "site",
       sass: "gh-pages-src/styles",
       style: "compressed",
       relative: true,
@@ -72,7 +72,7 @@ gulp.task("compass", function() {
 gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
   return gulp.src(paths.ghPagesIndex)
     .pipe(concat("index.html"))
-    .pipe(gulp.dest("./gh-pages"));
+    .pipe(gulp.dest("./site"));
 });
 
 gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
@@ -80,7 +80,7 @@ gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index"]);
 
 gulp.task("gh-pages", ["default"], function() {
-  return gulp.src("./gh-pages/**/*")
+  return gulp.src("./site/**/*")
     .pipe(deploy());
 });
 
