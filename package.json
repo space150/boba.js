@@ -20,6 +20,9 @@
     "gulp": "^3.7.0",
     "gulp-clean": "^0.3.0",
     "gulp-concat": "^2.2.0",
-    "gulp-gh-pages": "^0.3.2"
+    "gulp-gh-pages": "^0.3.2",
+    "gulp-markdown": "^0.1.2",
+    "gulp-remove-lines": "^0.1.0",
+    "merge-stream": "^0.1.1"
   }
 }
