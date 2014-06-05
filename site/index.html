@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Boba.js / space150</title>
+    <!--[if (gt IE 8) | (IEMobile)]><!-->
+      <link href="styles.css" media="all" rel="stylesheet" type="text/css" />
+    <!--<![endif]-->
+    <!--[if (lt IE 9) & (!IEMobile)]>
+      <link href="ie-styles.css" media="all" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="hero">
+      <div class="container">
+        <h1>Boba.js</h1>
+        <p>A JavaScript library for Google&nbsp;Analytics</p>
+        <div class="download-links">
+          <a href="boba.js" class="btn">boba.js</a>
+          <a href="boba-browserify.js" class="btn">boba-browserify.js</a>
+        </div>
+      </div>
+    </div>
+    <div class="readme">
+      <div class="container">
+
+<p>Boba.js is a small, easily extensible JavaScript library that makes working
+with Google Analytics easier.</p>
+<h1 id="use-it">Use it</h1>
+<p>Create a new instance of Boba:</p>
+<pre><code class="lang-js">tracker = new Boba
+</code></pre>
+<h2 id="constructor-options">Constructor options</h2>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>siteName</code></td>
+<td><code>&#39;site&#39;</code></td>
+</tr>
+<tr>
+<td><code>pageName</code></td>
+<td><code>&#39;page&#39;</code></td>
+</tr>
+<tr>
+<td><code>defaultCategory</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>defaultAction</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>defaultLabel</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>watch</code></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h3 id="options-example-">Options Example:</h3>
+<pre><code class="lang-js">tracker = new Boba({
+  siteName: &#39;Mandalore&#39;,
+  pageName: &#39;Slave I&#39;,
+  defaultCategory: &#39;category&#39;,
+  defaultAction: &#39;action&#39;,
+  defaultLabel: &#39;label&#39;,
+  watch: [
+    [&#39;click&#39;, &#39;.js-track-foo&#39;, trackFoo],
+    [&#39;click&#39;, &#39;.js-track-bar&#39;, trackBar]
+  ]
+})
+</code></pre>
+<h3 id="sitename-pagename">siteName, pageName</h3>
+<p>The name of the site and page, respectively.</p>
+<p>You can also get and set <code>tracker.siteName</code> and <code>tracker.pageName</code> at any time.</p>
+<h3 id="defaultcategory-defaultaction-defaultlabel">defaultCategory, defaultAction, defaultLabel</h3>
+<p>If an event does not have a category, action, or label, these values will be
+used instead.</p>
+<p>You can also change these at any time:</p>
+<pre><code class="lang-js">tracker.defaultCategory = &quot;Solo&quot;
+</code></pre>
+<h3 id="watch">watch</h3>
+<p>An array of arguments to apply to the <code>watch</code> method on initialization.</p>
+<p>See the Options Example above.</p>
+<h2 id="instance-methods">Instance methods</h2>
+<h3 id="boba-watch">Boba#watch</h3>
+<p><code>tracker.watch(eventType, selector, callback)</code></p>
+<p>This is sets up delegated event handlers for you. Under the hood, it does
+something like this:</p>
+<pre><code class="lang-js">$(&#39;body&#39;).on(eventType, selector, function(event) {
+  tracker.push(callback(event))
+}
+</code></pre>
+<h4 id="examples-">Examples:</h4>
+<pre><code class="lang-js">tracker.watch(&#39;click&#39;, &#39;.js-track&#39;, trackClick)
+tracker.watch(&#39;change&#39;, &#39;.js-track-select&#39;, trackSelect)
+</code></pre>
+<p>The callback is passed a
+<a href="http://api.jquery.com/category/events/event-object/">jQuery event object</a>
+and should return an object with <code>category</code>, <code>action</code>, and <code>label</code> properties:</p>
+<pre><code class="lang-js">{
+  category: &quot;category&quot;,
+  action: &quot;action&quot;,
+  label: &quot;label&quot;
+}
+</code></pre>
+<p>Any values not supplied will use defaults from the options (e.g.
+<code>tracker.options.defaultCategory</code>).</p>
+<h3 id="boba-tracklinks">Boba#trackLinks</h3>
+<p>This is a helper that basically does this:</p>
+<pre><code class="lang-js">tracker.watch(&#39;click&#39;, &#39;.js-track&#39;, function (event) {
+  return $(event.currentTarget).data()
+})
+</code></pre>
+<p>You can use these data attributes to set the category, action, and label when
+using this method:</p>
+<ul>
+<li><code>data-ga-category</code></li>
+<li><code>data-ga-action</code></li>
+<li><code>data-ga-label</code></li>
+</ul>
+<p>You can pass in an alternate selector if you don&#39;t want to use <code>&#39;.js-track&#39;</code>.
+For example, you could use a data attribute instead of a class:</p>
+<pre><code class="lang-js">tracker.trackLinks(&#39;[data-ga-track]&#39;)
+</code></pre>
+<h3 id="boba-push">Boba#push</h3>
+<p>This can be used to fire events manually.</p>
+<h4 id="example-">Example:</h4>
+<pre><code class="lang-js">tracker.push({
+  category: &quot;category&quot;,
+  action: &quot;action&quot;,
+  label: &quot;label&quot;
+})
+</code></pre>
+
+      </div>
+    </div>
+  </body>
+</html>

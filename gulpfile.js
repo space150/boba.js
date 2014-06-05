@@ -2,12 +2,12 @@ var gulp = require("gulp"),
   clean = require("gulp-clean"),
   compass = require("gulp-compass"),
   concat = require("gulp-concat"),
-  deploy = require("gulp-gh-pages"),
   markdown = require("gulp-markdown"),
   merge = require("merge-stream"),
   path = require("path"),
   removeLines = require("gulp-remove-lines"),
   rename = require("gulp-rename"),
+  shell = require("gulp-shell"),
 
   paths = {
     ghPagesIndex: [
@@ -79,10 +79,9 @@ gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 
 gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index"]);
 
-gulp.task("gh-pages", ["default"], function() {
-  return gulp.src("./site/**/*")
-    .pipe(deploy());
-});
+gulp.task("deploy", shell.task([
+  "git subtree push --prefix site origin gh-pages"
+]));
 
 
 watcherLogger = function watcherLogger(event) {

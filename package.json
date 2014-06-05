@@ -25,6 +25,7 @@
     "gulp-markdown": "^0.1.2",
     "gulp-remove-lines": "^0.1.0",
     "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.2.5",
     "merge-stream": "^0.1.1"
   }
 }
