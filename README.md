@@ -6,7 +6,7 @@ Create a new instance of Boba
 tracker = new Boba
 ```
 
-### Constructor options
+## Constructor options
 
 | option            | default  |
 | ----------------- | -------- |
@@ -17,7 +17,7 @@ tracker = new Boba
 | `defaultLabel`    | `null`   |
 | `watch`           | none     |
 
-#### Options Example:
+### Options Example:
 
 ```js
 tracker = new Boba({
@@ -33,14 +33,14 @@ tracker = new Boba({
 })
 ```
 
-#### siteName, pageName
+### siteName, pageName
 
 The name of the site and page, respectively.
 
 You can also get and set `tracker.siteName` and `tracker.pageName` at any time.
 
 
-#### defaultCategory, defaultAction, defaultLabel
+### defaultCategory, defaultAction, defaultLabel
 
 If an event does not have a category, action, or label, these values will be
 used instead.
@@ -51,16 +51,16 @@ You can also change these at any time:
 tracker.defaultCategory = "Solo"
 ```
 
-#### watch
+### watch
 
 An array of arguments to apply to the `watch` method on initialization.
 
 See the Options Example above.
 
 
-### Instance methods
+## Instance methods
 
-#### Boba#watch
+### Boba#watch
 
 `tracker.watch(eventType, selector, callback)`
 
@@ -73,7 +73,7 @@ $('body').on(eventType, selector, function(event) {
 }
 ```
 
-Examples:
+#### Examples:
 
 ```js
 tracker.watch('click', '.js-track', trackClick)
@@ -93,7 +93,7 @@ The callback is passed a jQuery event object and should return an object with `c
 Any values not supplied will use defaults from the options (e.g.
 `tracker.options.defaultCategory`).
 
-#### Boba#trackLinks
+### Boba#trackLinks
 
 This is a helper that basically does this:
 
@@ -110,18 +110,18 @@ using this method:
 - `data-ga-action`
 - `data-ga-label`
 
-You can pass in an alternate selector if you don't want to use '.js-track'. For
-example, you could use a data attribute if you don't want to use a class:
+You can pass in an alternate selector if you don't want to use `'.js-track'`.
+For example, you could use a data attribute instead of a class:
 
 ```js
 tracker.trackLinks('[data-ga-track]')
 ```
 
-#### Boba#push
+### Boba#push
 
 This can be used to fire events manually.
 
-Example:
+#### Example:
 
 ```js
 tracker.push({
@@ -132,6 +132,6 @@ tracker.push({
 ```
 
 
-## Contributing
+# Contributing
 
 See [the contributing guide](CONTRIBUTING.md).

@@ -1,0 +1,296 @@
+/*------------------------------------*\
+    $MIXINS
+\*------------------------------------*/
+
+// Micro clearfix, as per: nicolasgallagher.com/micro-clearfix-hack
+@mixin clearfix() {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin inline-block() {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
+
+// Image replacement
+@mixin hide-text() {
+  border: 0;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+}
+
+// Text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// WebKit-style focus
+@mixin tab-focus() {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+// Placeholder text
+@mixin placeholder() {
+  &:-moz-placeholder { @content; } // Firefox 4-18
+  &::-moz-placeholder { opacity: 1; @content; } // Firefox 19+
+  &:-ms-input-placeholder { @content; } // Internet Explorer 10+
+  &::-webkit-input-placeholder { @content; } // Safari and Chrome
+}
+
+// Form validation states
+@mixin form-control-validation($text-color: $grayDark, $border-color: $gray) {
+  label,
+  .radio,
+  .checkbox {
+    color: $text-color;
+  }
+  .form-control {
+    border-color: $border-color;
+    &:focus {
+      border-color: darken($border-color, 10%);
+      @include box-shadow(0 0 6px lighten($border-color, 20%));
+    }
+  }
+}
+
+// Form control focus state, based on WebKit's default styles
+@mixin form-control-focus($color: #66afe9) {
+  $color-rgba: rgba(red($color), green($color), blue($color), .6);
+  &:focus {
+    border-color: $color;
+    outline: 0;
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px $color-rgba);
+  }
+}
+
+
+// ***************************************************************************
+// Rem conversion mixin
+//
+// Converts pixels to rems for whatever property is passed to it. It returns
+// two lines of code — one of the regular pixel values (as fallback for
+// non-rem support), and another with the converted rem values.
+// via https://gist.github.com/bitmanic/1134548
+//
+// USAGE:
+//
+// .element {
+//    @include rem('padding', 10px 0 2px 5px);
+// }
+//
+// OUTPUTS TO:
+//
+// .element {
+//    padding: 10px 0 2px 5px;
+//    padding: 1rem 0 0.2rem 0.5rem;
+// }
+//
+// ***************************************************************************
+
+@mixin rem($property, $px_values) {
+
+  @if $legacy-ie == true {
+
+    // Return the property and its pixel values for legacy IE
+    #{$property}: $px_values;
+
+  }
+  @else {
+
+    // Convert the baseline into rems
+    $baseline_rem: ($base-font-size / 1rem);
+
+    // Print the first line in pixel values for browsers that don't support rems
+    #{$property}: $px_values;
+
+    // If there is only one (numeric) value, return the property/value for it
+    @if type-of($px_values) == 'number' {
+      #{$property}: $px_values / $baseline_rem;
+    }
+
+    // If there is more than one value, create a list and perform equations on each value
+    @else {
+      // Create an empty list that we can dump values into
+      $rem_values: ();
+
+      @each $value in $px_values {
+        // If the value is zero, return 0
+        @if $value == 0 {
+          $rem_values: append($rem_values, $value);
+        }
+        // If the value is not zero, convert it from px to rem
+        @else {
+          $rem_values: append($rem_values, ($value / $baseline_rem) );
+        }
+      }
+      // Return the property and its list of converted values
+      #{$property}: $rem_values;
+    }
+  }
+}
+
+
+// ***************************************************************************
+// Retina images mixin
+//
+// via http://37signals.com/svn/posts/3271-easy-retina-ready-images-using-scss
+// modified to calculate image dimensions automatically
+//
+// USAGE:
+//
+// .logo {
+//    background: image-url("logo_32x32.png") no-repeat;
+//    @include image-2x("logo_32x32@2x.png", 64px, 64px);
+// }
+//
+// OR
+//
+// .logo {
+//    background: image-url("logo_32x32.png") no-repeat;
+//    @include image-2x("logo_32x32@2x.png"); // no dimensions passed in
+// }
+//
+// If dimensions are omitted, the mixin will try to guess them using
+// image-width and image-height helpers. This only works if compass can find
+// the image file locally, however.
+//
+// ***************************************************************************
+
+@mixin image-2x($image, $width:"", $height:"") {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    // on retina, use image that is scaled by 2
+    background-image: url($image);
+
+    @if $width != "" {
+      // dimensions ARE passed in, use them
+      @include background-size($width $height);
+    } @else {
+      // dimensions NOT passed in, try to calculate them automatically
+      @include background-size(floor(image-width($image)/2) floor(image-height($image)/2));
+    }
+  }
+}
+
+
+// ***************************************************************************
+// Media query mixin
+//
+// All styles w/o a media-query are assumed to be base, mobile-first styles.
+// All styling "up" from that should be done in media queries.
+//
+// Our options are:
+//
+// hand-and-up    -  bigger-than-phone and up
+// lap-and-up     -  laptops and up
+// desk-and-up    -  desktops and up
+// wall-and-up    -  widescreen desktops and up
+// lap-and-down   -  smaller than laptops
+// hand-and-down  -  isolates phones
+//
+// Without one of these parameters the mixin will accept a custom media query.
+//
+// ***************************************************************************
+
+@mixin media-query($media-query) {
+
+  @if $legacy-ie == true {
+    // render styles without media queries
+
+    @if $media-query == "hand-and-up" { @content; }
+
+    @else if $media-query == "lap-and-up" { @content; }
+
+    @else if $media-query == "desk-and-up" { @content; }
+
+    @else if $media-query == "wall-and-up" {}
+
+    @else if $media-query == "desk-and-down" {}
+
+    @else if $media-query == "lap-and-down" {}
+
+    @else if $media-query == "hand-and-down" {}
+
+    // include custom breakpoints
+    @else {
+      @content;
+    }
+
+  }
+  @else {
+    // render styles without media queries if those breakpoints are false
+
+    @if $media-query == "hand-and-up" {
+      @if $hand-start != false {
+        @media only screen and (min-width:$hand-start) { @content; }
+      }
+      @else { @content; }
+    }
+
+    @else if $media-query == "lap-and-up" {
+      @if $lap-start != false {
+        @media only screen and (min-width:$lap-start) { @content; }
+      }
+      @else { @content; }
+    }
+
+    @else if $media-query == "desk-and-up" {
+      @if $desk-start != false {
+        @media only screen and (min-width:$desk-start) { @content; }
+      }
+      @else { @content; }
+    }
+
+    @else if $media-query == "wall-and-up" {
+      @if $wall-start != false {
+        @media only screen and (min-width:$wall-start) { @content; }
+      }
+      @else { @content; }
+    }
+
+    @else if $media-query == "desk-and-down" {
+      @if $desk-start != false {
+        @media only screen and (max-width: ($desk-start - 1px)) { @content; }
+      }
+      @else {}
+    }
+
+    @else if $media-query == "lap-and-down" {
+      @if $lap-start != false {
+        @media only screen and (max-width: ($lap-start - 1px)) { @content; }
+      }
+      @else {}
+    }
+
+    @else if $media-query == "hand-and-down" {
+      @if $hand-start != false {
+        @media only screen and (max-width: ($hand-start - 1px)) { @content; }
+      }
+      @else {}
+    }
+
+    // custom breakpoints
+    @else {
+      @media only screen and ($media-query) { @content; }
+    }
+
+  }
+}

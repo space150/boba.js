@@ -1,0 +1,38 @@
+/*------------------------------------*\
+    $SHARED
+\*------------------------------------*/
+
+@if $global-border-box == true {
+  // All elements will adopt `box-sizing:border-box;`
+  // as per paulirish.com/2012/box-sizing-border-box-ftw
+  *{
+    &,
+    &:before,
+    &:after {
+      @include box-sizing(border-box);
+    }
+  }
+}
+
+
+// Remove gap between elements and the bottom of their containers
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+// Fluid images
+img {
+  max-width: 100%;
+  -ms-interpolation-mode: bicubic;
+}
+
+// Non-fluid images if you specify `width` and/or `height` attributes
+img[width],
+img[height] {
+  max-width: none;
+}
+

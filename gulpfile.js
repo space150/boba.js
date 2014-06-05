@@ -1,10 +1,22 @@
 var gulp = require("gulp"),
   clean = require("gulp-clean"),
+  compass = require("gulp-compass"),
   concat = require("gulp-concat"),
   deploy = require("gulp-gh-pages"),
   markdown = require("gulp-markdown"),
   merge = require("merge-stream"),
-  removeLines = require("gulp-remove-lines");
+  path = require("path"),
+  removeLines = require("gulp-remove-lines"),
+
+  paths = {
+    ghPagesIndex: [
+      "./gh-pages-src/top.html",
+      "./tmp/README.html",
+      "./gh-pages-src/bottom.html"
+    ]
+  },
+
+  watcherLogger;
 
 gulp.task("boba-js", function() {
   return gulp.src("./boba.js")
@@ -37,18 +49,48 @@ gulp.task("gh-pages-readme", function() {
     .pipe(gulp.dest("./tmp"));
 });
 
+gulp.task("compass", function() {
+  return gulp.src("./gh-pages-src/styles/**/*.scss")
+    .pipe(compass({
+      project: path.join(__dirname, '/'),
+      css: "gh-pages",
+      sass: "gh-pages-src/styles",
+      style: "compressed",
+      relative: true,
+      comments: false
+    }))
+    .pipe(gulp.dest("./tmp/"));
+});
+
 gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
-  return gulp.src(["./gh-pages-src/top.html", "./tmp/README.html", "./gh-pages-src/bottom.html"])
+  return gulp.src(paths.ghPagesIndex)
     .pipe(concat("index.html"))
     .pipe(gulp.dest("./gh-pages"));
 });
 
 gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 
-gulp.task("default", ["clean", "build-js", "gh-pages-index"]);
+gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index"]);
 
 gulp.task("gh-pages", ["default"], function() {
   return gulp.src("./gh-pages/**/*")
     .pipe(deploy());
 });
+
+
+watcherLogger = function watcherLogger(event) {
+  console.log(
+    "File " + event.path + " was " + event.type + ", running tasks..."
+  );
+};
+
+gulp.task("watch", function() {
+  console.log("Watching for changes...");
+
+  gulp.watch(paths.ghPagesIndex, ["gh-pages-index"])
+    .on("change", watcherLogger);
+
+  gulp.watch("./gh-pages-src/styles/**/*.scss", ["compass"])
+    .on("change", watcherLogger);
+})
 

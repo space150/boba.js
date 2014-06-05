@@ -1,0 +1,50 @@
+/*------------------------------------*\
+    $GRIDS
+\*------------------------------------*/
+
+@mixin grid() {
+
+  // Grid wrapper
+  .gw,
+  .grid-wrapper {
+    list-style: none;
+    margin-bottom: 0;
+    @include rem(margin-left, -$gutter);
+    @include clearfix();
+  }
+
+
+  // Reverse grid
+  .gw--rev > .g,
+  .grid-wrapper--rev > .grid { float: right; }
+
+
+  // Gutterless grid
+  .gw--full,
+  .grid-wrapper--full {
+    margin-left: 0;
+    > .g, > .grid {
+      padding-left: 0;
+    }
+  }
+
+
+  // Very infrequently occuring grid wrappers as children of grid wrappers
+  .gw > .gw,
+  .grid-wrapper > .grid-wrapper { margin-left: 0; }
+
+
+  // Grid
+  .g,
+  .grid {
+    float: left;
+    width: 100%;
+    @include rem(padding-left, $gutter);
+    @include transition(width .15s ease);
+    @if $global-border-box == false {
+      @include box-sizing(border-box);
+    }
+  }
+}
+
+@include grid();
