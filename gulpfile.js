@@ -7,6 +7,7 @@ var gulp = require("gulp"),
   merge = require("merge-stream"),
   path = require("path"),
   removeLines = require("gulp-remove-lines"),
+  rename = require("gulp-rename"),
 
   paths = {
     ghPagesIndex: [
@@ -20,12 +21,18 @@ var gulp = require("gulp"),
 
 gulp.task("boba-js", function() {
   return gulp.src("./boba.js")
+    .pipe(removeLines({filters: [
+      /module.exports/
+    ]}))
     .pipe(gulp.dest("./gh-pages"));
 });
 
 gulp.task("boba-browserify-js", function() {
-  return gulp.src(["./boba.js", "./browserify-export.js"])
-    .pipe(concat("boba-browserify.js"))
+  return gulp.src("./boba.js")
+    .pipe(removeLines({filters: [
+      /window.Boba/
+    ]}))
+    .pipe(rename("boba-browserify.js"))
     .pipe(gulp.dest("./gh-pages"));
 });
 
