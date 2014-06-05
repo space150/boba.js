@@ -87,7 +87,7 @@ watcherLogger = function watcherLogger(event) {
 gulp.task("watch", function() {
   console.log("Watching for changes...");
 
-  gulp.watch(paths.ghPagesIndex, ["gh-pages-index"])
+  gulp.watch(paths.ghPagesIndex.concat(["./README.md"]), ["gh-pages-index"])
     .on("change", watcherLogger);
 
   gulp.watch("./gh-pages-src/styles/**/*.scss", ["compass"])

@@ -1,6 +1,11 @@
 # Boba.js
 
-Create a new instance of Boba
+Boba.js is a small, easily extensible JavaScript library that makes working
+with Google Analytics easier.
+
+# Use it
+
+Create a new instance of Boba:
 
 ```js
 tracker = new Boba
@@ -80,7 +85,9 @@ tracker.watch('click', '.js-track', trackClick)
 tracker.watch('change', '.js-track-select', trackSelect)
 ```
 
-The callback is passed a jQuery event object and should return an object with `category`, `action`, and `label` properties:
+The callback is passed a
+[jQuery event object](http://api.jquery.com/category/events/event-object/)
+and should return an object with `category`, `action`, and `label` properties:
 
 ```js
 {
@@ -99,7 +106,7 @@ This is a helper that basically does this:
 
 ```js
 tracker.watch('click', '.js-track', function (event) {
-  return $(event.currentTarget).data();
+  return $(event.currentTarget).data()
 })
 ```
 
