@@ -14,6 +14,9 @@ var gulp = require("gulp"),
       "./gh-pages-src/top.html",
       "./tmp/README.html",
       "./gh-pages-src/bottom.html"
+    ],
+    images: [
+      "./gh-pages-src/boba.svg"
     ]
   },
 
@@ -70,8 +73,11 @@ gulp.task("compass", function() {
 });
 
 gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
-  return gulp.src(paths.ghPagesIndex)
+  gulp.src(paths.ghPagesIndex)
     .pipe(concat("index.html"))
+    .pipe(gulp.dest("./site"));
+
+  gulp.src(paths.images)
     .pipe(gulp.dest("./site"));
 });
 

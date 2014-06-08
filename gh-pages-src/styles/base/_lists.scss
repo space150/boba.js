@@ -31,13 +31,14 @@
 }
 
 .h-list--piped {
+  @include inline-block();
   > li {
     margin-right: 0;
   }
   > li + li {
     margin-left: $half-spacing-unit;
     padding-left: $half-spacing-unit;
-    border-left: solid 1px;
+    border-left: solid 1px $primary;
   }
 }
 

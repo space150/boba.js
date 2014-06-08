@@ -36,12 +36,24 @@ $wall-start:   1200px;
 $black:        #000;
 $dark-gray:    #4c4c4c;
 $gray:         #999;
-$light-gray:   #efefef;
-$white:        #fff;
+$light-gray:   #d6d6d6;
+$white:        #efefef;
 
-$primary:      #425a37; // dark green
-$secondary:    #daa520; // goldenrod
-$tertiary:     #dcdcdc;
+// Boba colors
+$black:      #000000;
+$dark-gray:  #333333;
+$green:      #3e4935;
+$grey:       #647075;
+$red:        #6d0909;
+$brown:      #7f5229;
+// $light-grey: #bbbbbb;
+$tan:        #efd49e;
+$yellow:     #fbb03b;
+
+$primary:      $green;
+$secondary:    $yellow;
+$tertiary:     $light-gray;
+
 
 
 // $tertiary:     #4f2683; // purple
@@ -49,8 +61,13 @@ $tertiary:     #dcdcdc;
 // quinary, senary, septenary, octonary, nonary, denary
 
 // Fonts
-$font-body:   "HelveticaNeue-Light", "Helvetica Neue Light",
-              "Helvetica Neue", Helvetica, Arial,
-              "Lucida Grande", sans-serif;
+$font-body:    "HelveticaNeue-Light", "Helvetica Neue Light",
+               "Helvetica Neue", Helvetica, Arial,
+               "Lucida Grande", sans-serif;
+
+$font-heading: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight",
+               "HelveticaNeue-Light", "Helvetica Neue Light",
+               "Helvetica Neue", Helvetica, Arial,
+               "Lucida Grande", sans-serif;
 
 $font-code: monospace;
