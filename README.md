@@ -1,7 +1,12 @@
 # Boba.js
 
 Boba.js is a small, easily extensible JavaScript library that makes working
-with Google Analytics easier.
+with Google Analytics easier. It supports the old
+[`ga.js`](https://developers.google.com/analytics/devguides/collection/gajs/)
+library as well as the new
+[`analytics.js`](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
+library. It has one out of the box function, [`trackLinks`](#boba-tracklinks),
+and makes tracking everything else child's play.
 
 # Use it
 
@@ -13,16 +18,7 @@ tracker = new Boba
 
 ## Constructor options
 
-| option            | default  |
-| ----------------- | -------- |
-| `siteName`        | `'site'` |
-| `pageName`        | `'page'` |
-| `defaultCategory` | `null`   |
-| `defaultAction`   | `null`   |
-| `defaultLabel`    | `null`   |
-| `watch`           | none     |
-
-### Options Example:
+All optional.
 
 ```js
 tracker = new Boba({
@@ -42,8 +38,12 @@ tracker = new Boba({
 
 The name of the site and page, respectively.
 
-You can also get and set `tracker.siteName` and `tracker.pageName` at any time.
+You can also get and set `tracker.siteName` and `tracker.pageName` at any time:
 
+```js
+tracker.siteName = 'Mandalore'
+tracker.pageName = 'Slave I'
+```
 
 ### defaultCategory, defaultAction, defaultLabel
 
@@ -53,14 +53,22 @@ used instead.
 You can also change these at any time:
 
 ```js
-tracker.defaultCategory = "Solo"
+tracker.defaultCategory = 'category'
+tracker.defaultAction = 'action'
+tracker.defaultLabel = 'label'
 ```
 
 ### watch
 
-An array of arguments to apply to the `watch` method on initialization.
+An array of arguments to apply to the [`watch`](#boba-watch) method on
+initialization.
 
-See the Options Example above.
+```js
+watch: [
+  ['click', '.js-track-foo', trackFoo],
+  ['click', '.js-track-bar', trackBar]
+]
+```
 
 
 ## Instance methods
@@ -142,3 +150,4 @@ tracker.push({
 # Contributing
 
 See [the contributing guide](CONTRIBUTING.md).
+

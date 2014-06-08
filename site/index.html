@@ -32,47 +32,18 @@
       <div class="container">
 
 <p>Boba.js is a small, easily extensible JavaScript library that makes working
-with Google Analytics easier.</p>
+with Google Analytics easier. It supports the old
+<a href="https://developers.google.com/analytics/devguides/collection/gajs/"><code>ga.js</code></a>
+library as well as the new
+<a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/"><code>analytics.js</code></a>
+library. It has one out of the box function, <a href="#boba-tracklinks"><code>trackLinks</code></a>,
+and makes tracking everything else child&#39;s play.</p>
 <h1 id="use-it">Use it</h1>
 <p>Create a new instance of Boba:</p>
 <pre><code class="lang-js">tracker = new Boba
 </code></pre>
 <h2 id="constructor-options">Constructor options</h2>
-<table>
-<thead>
-<tr>
-<th>option</th>
-<th>default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>siteName</code></td>
-<td><code>&#39;site&#39;</code></td>
-</tr>
-<tr>
-<td><code>pageName</code></td>
-<td><code>&#39;page&#39;</code></td>
-</tr>
-<tr>
-<td><code>defaultCategory</code></td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>defaultAction</code></td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>defaultLabel</code></td>
-<td><code>null</code></td>
-</tr>
-<tr>
-<td><code>watch</code></td>
-<td>none</td>
-</tr>
-</tbody>
-</table>
-<h3 id="options-example-">Options Example:</h3>
+<p>All optional.</p>
 <pre><code class="lang-js">tracker = new Boba({
   siteName: &#39;Mandalore&#39;,
   pageName: &#39;Slave I&#39;,
@@ -87,16 +58,26 @@ with Google Analytics easier.</p>
 </code></pre>
 <h3 id="sitename-pagename">siteName, pageName</h3>
 <p>The name of the site and page, respectively.</p>
-<p>You can also get and set <code>tracker.siteName</code> and <code>tracker.pageName</code> at any time.</p>
+<p>You can also get and set <code>tracker.siteName</code> and <code>tracker.pageName</code> at any time:</p>
+<pre><code class="lang-js">tracker.siteName = &#39;Mandalore&#39;
+tracker.pageName = &#39;Slave I&#39;
+</code></pre>
 <h3 id="defaultcategory-defaultaction-defaultlabel">defaultCategory, defaultAction, defaultLabel</h3>
 <p>If an event does not have a category, action, or label, these values will be
 used instead.</p>
 <p>You can also change these at any time:</p>
-<pre><code class="lang-js">tracker.defaultCategory = &quot;Solo&quot;
+<pre><code class="lang-js">tracker.defaultCategory = &#39;category&#39;
+tracker.defaultAction = &#39;action&#39;
+tracker.defaultLabel = &#39;label&#39;
 </code></pre>
 <h3 id="watch">watch</h3>
-<p>An array of arguments to apply to the <code>watch</code> method on initialization.</p>
-<p>See the Options Example above.</p>
+<p>An array of arguments to apply to the <a href="#boba-watch"><code>watch</code></a> method on
+initialization.</p>
+<pre><code class="lang-js">watch: [
+  [&#39;click&#39;, &#39;.js-track-foo&#39;, trackFoo],
+  [&#39;click&#39;, &#39;.js-track-bar&#39;, trackBar]
+]
+</code></pre>
 <h2 id="instance-methods">Instance methods</h2>
 <h3 id="boba-watch">Boba#watch</h3>
 <p><code>tracker.watch(eventType, selector, callback)</code></p>
