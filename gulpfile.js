@@ -16,7 +16,8 @@ var gulp = require("gulp"),
       "./gh-pages-src/bottom.html"
     ],
     images: [
-      "./gh-pages-src/boba.svg"
+      "./gh-pages-src/boba.svg",
+      "./gh-pages-src/space150.svg"
     ]
   },
 
