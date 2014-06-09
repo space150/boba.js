@@ -83,7 +83,7 @@ something like this:
 ```js
 $('body').on(eventType, selector, function(event) {
   tracker.push(callback(event))
-}
+})
 ```
 
 #### Examples:
