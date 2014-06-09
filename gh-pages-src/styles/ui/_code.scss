@@ -13,6 +13,7 @@ pre {
 code {
   padding: 2px 4px;
   margin: 0 1px;
+  @include inline-block;
 }
 pre {
   @extend .island;
