@@ -15,8 +15,8 @@ html {
 
 a {
   color: $primary;
-  text-decoration: none;
-  &:hover { text-decoration: underline; }
+  text-decoration: underline;
+  &:hover { text-decoration: none; }
 }
 
 i { font-style: normal; }
