@@ -23,7 +23,11 @@ paths = {
     includes: "site/_includes",
     all: "site/**/*"
   },
-  js: ["./site/js/konami.1.3.3.pack.js", "./site/js/boba.js"],
+  js: [
+    "./site/js/vendor/**/*",
+    "./site/js/boba.js",
+    "./site/js/main.js"
+  ],
   readme: "README.md",
   cname: "./gh-pages-src/CNAME",
   temp: "./tmp"
@@ -81,7 +85,6 @@ gulp.task("uncss", function() {
 });
 
 gulp.task("app-js", function() {
-  // TODO: Browserify
   gulp.src(paths.js)
     .pipe(concat("app.js"))
     .pipe(gulp.dest("./site/js"));
