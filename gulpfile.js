@@ -22,7 +22,8 @@ var gulp = require("gulp"),
       "./gh-pages-src/boba.gif",
       "./gh-pages-src/space150.svg",
       "./gh-pages-src/space150.gif"
-    ]
+    ],
+    cname: "./gh-pages-src/CNAME"
   },
 
   watcherLogger;
@@ -83,6 +84,9 @@ gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
     .pipe(gulp.dest("./site"));
 
   gulp.src(paths.images)
+    .pipe(gulp.dest("./site"));
+
+  gulp.src(paths.cname)
     .pipe(gulp.dest("./site"));
 });
 
