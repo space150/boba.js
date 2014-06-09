@@ -85,7 +85,7 @@ initialization.</p>
 something like this:</p>
 <pre><code class="lang-js">$(&#39;body&#39;).on(eventType, selector, function(event) {
   tracker.push(callback(event))
-}
+})
 </code></pre>
 <h4 id="examples-">Examples:</h4>
 <pre><code class="lang-js">tracker.watch(&#39;click&#39;, &#39;.js-track&#39;, trackClick)

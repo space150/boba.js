@@ -4,10 +4,12 @@ var gulp = require("gulp"),
   concat = require("gulp-concat"),
   markdown = require("gulp-markdown"),
   merge = require("merge-stream"),
+  minifyCSS = require("gulp-minify-css"),
   path = require("path"),
   removeLines = require("gulp-remove-lines"),
   rename = require("gulp-rename"),
   shell = require("gulp-shell"),
+  uncss = require("gulp-uncss"),
 
   paths = {
     ghPagesIndex: [
@@ -82,9 +84,18 @@ gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
     .pipe(gulp.dest("./site"));
 });
 
+gulp.task("uncss", function() {
+  return gulp.src("./site/styles.css")
+    .pipe(uncss({
+      html: ["./site/index.html"]
+    }))
+    .pipe(minifyCSS({ keepBreaks:false }))
+    .pipe(gulp.dest("./site"));
+});
+
 gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 
-gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index"]);
+gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index", "uncss"]);
 
 gulp.task("deploy", shell.task([
   "git subtree push --prefix site origin gh-pages"
