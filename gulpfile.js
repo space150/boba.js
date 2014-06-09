@@ -13,7 +13,10 @@ var options, paths,
   uncss = require("gulp-uncss");
 
 paths = {
-  clean: "./tmp",
+  clean: [
+    "./tmp",
+    "./site/css"
+  ],
   jekyll: {
     build: "_site",
     source: "site",
@@ -24,6 +27,13 @@ paths = {
   readme: "README.md",
   cname: "./gh-pages-src/CNAME",
   temp: "./tmp"
+};
+
+options = {
+  uncss: {
+    html: ["./site/_site/index.html"],
+    ignore: [/trippy/]
+  }
 };
 
 gulp.task("boba-js", function() {
@@ -65,9 +75,7 @@ gulp.task("serve", shell.task([
 
 gulp.task("uncss", function() {
   return gulp.src("./site/css/styles.css")
-    .pipe(uncss({
-      html: ["./site/_site/index.html"]
-    }))
+    .pipe(uncss(options.uncss))
     .pipe(minifyCSS({ keepBreaks:false }))
     .pipe(gulp.dest("./site/css"));
 });
