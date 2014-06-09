@@ -991,31 +991,36 @@ img[height] {
 }
 
 /* line 72, ../_sass/base/_helpers.scss */
+.text-small {
+  font-size: .75em;
+}
+
+/* line 74, ../_sass/base/_helpers.scss */
 .text-left {
   text-align: left !important;
 }
 
-/* line 73, ../_sass/base/_helpers.scss */
+/* line 75, ../_sass/base/_helpers.scss */
 .text-center {
   text-align: center !important;
 }
 
-/* line 74, ../_sass/base/_helpers.scss */
+/* line 76, ../_sass/base/_helpers.scss */
 .text-right {
   text-align: right !important;
 }
 
-/* line 75, ../_sass/base/_helpers.scss */
+/* line 77, ../_sass/base/_helpers.scss */
 .text-upper {
   text-transform: uppercase !important;
 }
 
-/* line 76, ../_sass/base/_helpers.scss */
+/* line 78, ../_sass/base/_helpers.scss */
 .text-strong {
   font-weight: bold !important;
 }
 
-/* line 77, ../_sass/base/_helpers.scss */
+/* line 79, ../_sass/base/_helpers.scss */
 .text-nowrap {
   white-space: nowrap !important;
 }
