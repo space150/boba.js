@@ -95,9 +95,22 @@ gulp.task("uncss", function() {
     .pipe(gulp.dest("./site"));
 });
 
+gulp.task("app-js", function() {
+  gulp.src(["./gh-pages-src/konami.1.3.3.pack.js", "./site/boba.js"])
+    .pipe(concat("app.js"))
+    .pipe(gulp.dest("./site"));
+});
+
 gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
 
-gulp.task("default", ["clean", "build-js", "compass", "gh-pages-index", "uncss"]);
+gulp.task("default", [
+  "clean",
+  "build-js",
+  "compass",
+  "gh-pages-index",
+  "uncss",
+  "app-js"
+]);
 
 gulp.task("deploy", shell.task([
   "git subtree push --prefix site origin gh-pages"

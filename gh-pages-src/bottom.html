@@ -10,5 +10,14 @@
         <![endif]-->
       </a>
     </div>
+    <script src="app.js"></script>
+    <script>
+      (function() {
+        var boba = document.querySelector(".hero__image");
+        var k = new Konami;
+        k.code = function () { boba.classList.add("trippy") };
+        k.load();
+      }());
+    </script>
   </body>
 </html>
