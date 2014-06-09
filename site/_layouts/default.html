@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+    <body>
+
+    {{ content }}
+
+    {% include footer.html %}
+
+      <script src="/js/app.js"></script>
+      <script>
+        (function() {
+          var boba = document.querySelector(".hero__image");
+          var k = new Konami;
+          k.code = function () { boba.classList.add("trippy") };
+          k.load();
+        }());
+      </script>
+
+    </body>
+</html>

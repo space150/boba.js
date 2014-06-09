@@ -1,139 +1,88 @@
-var gulp = require("gulp"),
+var options, paths,
+  gulp = require("gulp"),
+  merge = require("merge-stream"),
+  path = require("path"),
+
   clean = require("gulp-clean"),
-  compass = require("gulp-compass"),
   concat = require("gulp-concat"),
   markdown = require("gulp-markdown"),
-  merge = require("merge-stream"),
   minifyCSS = require("gulp-minify-css"),
-  path = require("path"),
   removeLines = require("gulp-remove-lines"),
   rename = require("gulp-rename"),
   shell = require("gulp-shell"),
-  uncss = require("gulp-uncss"),
+  uncss = require("gulp-uncss");
 
-  paths = {
-    ghPagesIndex: [
-      "./gh-pages-src/top.html",
-      "./tmp/README.html",
-      "./gh-pages-src/bottom.html"
-    ],
-    images: [
-      "./gh-pages-src/boba.svg",
-      "./gh-pages-src/boba.gif",
-      "./gh-pages-src/space150.svg",
-      "./gh-pages-src/space150.gif"
-    ],
-    cname: "./gh-pages-src/CNAME"
+paths = {
+  clean: "./tmp",
+  jekyll: {
+    build: "_site",
+    source: "site",
+    includes: "site/_includes",
+    all: "site/**/*"
   },
-
-  watcherLogger;
+  js: ["./site/js/konami.1.3.3.pack.js", "./site/js/boba.js"],
+  readme: "README.md",
+  cname: "./gh-pages-src/CNAME",
+  temp: "./tmp"
+};
 
 gulp.task("boba-js", function() {
-  return gulp.src("./boba.js")
-    .pipe(removeLines({filters: [
-      /module.exports/
-    ]}))
-    .pipe(gulp.dest("./site"));
-});
-
-gulp.task("boba-browserify-js", function() {
-  return gulp.src("./boba.js")
-    .pipe(removeLines({filters: [
-      /window.Boba/
-    ]}))
-    .pipe(rename("boba-browserify.js"))
-    .pipe(gulp.dest("./site"));
-});
-
-gulp.task("clean", function() {
   return merge(
-    gulp.src("./site/**/*", {read: false})
-      .pipe(clean()),
-    gulp.src("./tmp", {read: false})
-      .pipe(clean())
+    gulp.src("./boba.js") // Build window.Boba version.
+      .pipe(removeLines({filters: [ /module.exports/ ]}))
+      .pipe(gulp.dest(paths.jekyll.source + "/js")),
+
+    gulp.src("./boba.js") // Build Browserify version.
+      .pipe(removeLines({filters: [ /window.Boba/ ]}))
+      .pipe(rename("boba-browserify.js"))
+      .pipe(gulp.dest(paths.jekyll.source + "/js"))
   );
 });
 
-gulp.task("gh-pages-readme", function() {
-  return gulp.src("./README.md")
+gulp.task("clean", function() {
+  return gulp.src(paths.clean, {read: false})
+    .pipe(clean());
+});
+
+gulp.task("readme", function() {
+  return gulp.src(paths.readme)
     .pipe(markdown())
     .pipe(removeLines({filters: [
       /id="boba-js"/,
       /id="contributing"/,
       /the contributing guide/
     ]}))
-    .pipe(gulp.dest("./tmp"));
+    .pipe(gulp.dest(paths.jekyll.includes));
 });
 
-gulp.task("compass", function() {
-  return gulp.src("./gh-pages-src/styles/**/*.scss")
-    .pipe(compass({
-      project: path.join(__dirname, '/'),
-      css: "site",
-      sass: "gh-pages-src/styles",
-      style: "compressed",
-      relative: true,
-      comments: false
-    }))
-    .pipe(gulp.dest("./tmp/"));
-});
+gulp.task("jekyll", shell.task([
+  "cd " + paths.jekyll.source + " && jekyll build"
+]));
 
-gulp.task("gh-pages-index", ["gh-pages-readme"], function() {
-  gulp.src(paths.ghPagesIndex)
-    .pipe(concat("index.html"))
-    .pipe(gulp.dest("./site"));
-
-  gulp.src(paths.images)
-    .pipe(gulp.dest("./site"));
-
-  gulp.src(paths.cname)
-    .pipe(gulp.dest("./site"));
-});
+gulp.task("serve", shell.task([
+  "cd " + paths.jekyll.source + " && jekyll serve --watch"
+]));
 
 gulp.task("uncss", function() {
-  return gulp.src("./site/styles.css")
+  return gulp.src("./site/css/styles.css")
     .pipe(uncss({
-      html: ["./site/index.html"]
+      html: ["./site/_site/index.html"]
     }))
     .pipe(minifyCSS({ keepBreaks:false }))
-    .pipe(gulp.dest("./site"));
+    .pipe(gulp.dest("./site/css"));
 });
 
 gulp.task("app-js", function() {
-  gulp.src(["./gh-pages-src/konami.1.3.3.pack.js", "./site/boba.js"])
+  // TODO: Browserify
+  gulp.src(paths.js)
     .pipe(concat("app.js"))
-    .pipe(gulp.dest("./site"));
+    .pipe(gulp.dest("./site/js"));
 });
 
-gulp.task("build-js", ["boba-js", "boba-browserify-js"]);
-
-gulp.task("default", [
-  "clean",
-  "build-js",
-  "compass",
-  "gh-pages-index",
-  "uncss",
-  "app-js"
-]);
+gulp.task("default", [ "clean", "boba-js", "uncss", "app-js", "jekyll" ]);
+gulp.task("dev", ["clean", "boba-js", "uncss", "app-js", "serve"]);
 
 gulp.task("deploy", shell.task([
-  "git subtree push --prefix site origin gh-pages"
+  "git subtree push --prefix " + paths.jekyll.source + " origin gh-pages"
 ]));
-
-
-watcherLogger = function watcherLogger(event) {
-  console.log(
-    "File " + event.path + " was " + event.type + ", running tasks..."
-  );
-};
-
-gulp.task("watch", function() {
-  console.log("Watching for changes...");
-
-  gulp.watch(paths.ghPagesIndex.concat(["./README.md"]), ["gh-pages-index"])
-    .on("change", watcherLogger);
-
-  gulp.watch("./gh-pages-src/styles/**/*.scss", ["compass"])
-    .on("change", watcherLogger);
-})
 
