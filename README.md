@@ -6,7 +6,8 @@ with Google Analytics easier. It supports the old
 library as well as the new
 [`analytics.js`](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
 library. It has one out of the box function, [`trackLinks`](#boba-tracklinks),
-and makes tracking everything else child's play.
+and makes tracking everything else child's play. Requires
+[jQuery](http://jquery.com/).
 
 # Use it
 
