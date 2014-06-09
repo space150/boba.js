@@ -47,14 +47,16 @@
   position: relative;
   float: none;
   left: -23%;
-  margin: 0 0 2em;
+  margin: 0;
   z-index: 1;
+  @include transform(scale(1.9) translate(-27px, 14%));
 
   @include media-query(lap-and-up) {
     float: right;
     width: 75%;
     left: 0;
     margin: -15.5em 0 -0.5em;
+    @include transform(scale(1.7) translate(-100px, 100px));
   }
 }
 
