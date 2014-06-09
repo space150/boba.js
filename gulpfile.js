@@ -19,7 +19,9 @@ var gulp = require("gulp"),
     ],
     images: [
       "./gh-pages-src/boba.svg",
-      "./gh-pages-src/space150.svg"
+      "./gh-pages-src/boba.gif",
+      "./gh-pages-src/space150.svg",
+      "./gh-pages-src/space150.gif"
     ]
   },
 

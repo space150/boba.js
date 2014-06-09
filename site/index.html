@@ -25,7 +25,12 @@
             <li><a href="https://www.npmjs.org/package/boba.js">npm</a></li>
           </ul>
         </div>
-        <img src="boba.svg" alt="Boba Fett" class="hero__image" title="Illustration by Matt Anderson - pearcestudio.com">
+        <!--[if (gt IE 8)]><!-->
+          <img src="boba.svg" alt="Boba Fett" class="hero__image" title="Illustration by Matt Anderson - pearcestudio.com">
+        <!--<![endif]-->
+        <!--[if (lt IE 9)]>
+          <img src="boba.gif" alt="Boba Fett" class="hero__image" title="Illustration by Matt Anderson - pearcestudio.com">
+        <![endif]-->
       </div>
     </div>
     <div class="readme">
@@ -132,7 +137,14 @@ For example, you could use a data attribute instead of a class:</p>
       </div><!-- end .container -->
     </div><!-- end .readme -->
     <div class="container text-center">
-      <a href="http://space150.com"><img src="space150.svg" alt="spac150"></a>
+      <a href="http://space150.com">
+        <!--[if (gt IE 8)]><!-->
+          <img src="space150.svg" alt="spac150">
+        <!--<![endif]-->
+        <!--[if (lt IE 9)]>
+          <img src="space150.gif" alt="spac150">
+        <![endif]-->
+      </a>
     </div>
   </body>
 </html>
