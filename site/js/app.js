@@ -9,7 +9,9 @@ a.addEvent(document,"touchend",function(){a.iphone.tap==true&&a.iphone.check_dir
 x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.keys.slice(1,this.keys.length);if(this.keys.length==0){this.keys=this.orig_keys;this.code(b)}}}};return a};
 
 (function() {
-  var Boba = (function() {
+  var Boba, $;
+
+  Boba = (function() {
     var defaults = {
       pageName: "page",
       siteName: "site",
@@ -28,7 +30,7 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
         if (typeof this.opts.watch !== "undefined") {
           for (var i = this.opts.watch.length - 1; i >= 0; i--) {
             this.watch.apply(this, this.opts.watch[i]);
-          };
+          }
         }
 
         this.pageName = this.opts.pageName;
@@ -52,14 +54,17 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
 
     Boba.prototype = {
       watch: function watch(eventType, selector, func) {
-        var trackingFunction = function(event) {
-          this.push(func(event));
-        };
-        $("body").on(
+        var body = document.querySelector('body'),
+            trackingFunction = function(event) {
+              this.push(func(event));
+            };
+
+        $.on(body,
           eventType + ".tracker",
           selector,
           $.proxy(trackingFunction, this)
         );
+
         return this;
       },
 
@@ -81,7 +86,7 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
 
       _onTrackedClick: function trackClick(event) {
         if (this.ga) {
-          return $(event.currentTarget).data();
+          return event.currentTarget.dataset;
         }
       },
 
@@ -109,6 +114,38 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
 
     return Boba;
   }());
+
+  $ = {
+    extend: function BobaExtend(dest, src) {
+      for(var key in src) {
+        dest[key] = src[key];
+      }
+
+      return dest;
+    },
+
+    proxy: function BobaProxy(fn, ref) {
+      return function() {
+        fn.call(ref);
+      };
+    },
+
+    on: function BobaOn(el, eventName, selector, handler) {
+      var callback = function(e) {
+        if (e.target === selector) {
+          handler.call(el);
+        }
+      };
+
+      if (el.addEventListener) {
+        el.addEventListener(eventName, callback);
+      } else {
+        el.attachEvent('on' + eventName, callback);
+      }
+    }
+  };
+
+
   window.Boba = Boba;
 }());
 
