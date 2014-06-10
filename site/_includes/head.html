@@ -6,6 +6,22 @@
     <meta name="description" content="{{ site.description }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
+    <!-- Open Graph -->
+    <meta property="og:image" content="{{ site.url }}/img/boba-share.gif"/>
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}"/>
+    <meta property="og:site_name" content="{{ site.title }}"/>
+
+    <!-- Google+ Metadata /-->
+    <meta itemprop="name" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+    <meta itemprop="description" content="{{ site.description }}">
+    <meta itemprop="image" content="{{ site.url }}/img/boba-share.gif">
+
+    <!-- Twitter Metadata -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+    <meta name="twitter:description" content="{{ site.description }}" />
+    <meta name="twitter:image" content="{{ site.url }}/img/boba-share.gif" />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ "/css/styles.css" | prepend: site.baseurl }}">
 
