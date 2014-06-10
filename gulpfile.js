@@ -71,11 +71,11 @@ gulp.task("readme", function() {
 });
 
 gulp.task("jekyll", shell.task([
-  "cd " + paths.jekyll.source + " && jekyll build"
+  "cd " + paths.jekyll.source + " && bundle exec jekyll build"
 ]));
 
 gulp.task("serve", shell.task([
-  "cd " + paths.jekyll.source + " && jekyll serve --watch"
+  "cd " + paths.jekyll.source + " && bundle exec jekyll serve --watch"
 ]));
 
 gulp.task("uncss", function() {
