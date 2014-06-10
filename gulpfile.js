@@ -63,6 +63,7 @@ gulp.task("readme", function() {
     .pipe(markdown())
     .pipe(removeLines({filters: [
       /id="boba-js"/,
+      /boba.gif/,
       /id="contributing"/,
       /the contributing guide/
     ]}))
