@@ -1,70 +1,34 @@
-# boba.js
+# Boba.js
 
-## API
+<img src="site/img/boba.gif" width="30%" align="right">
+Boba.js is a small, easily extensible JavaScript library that makes working
+with Google Analytics easier. It supports the old
+[`ga.js`](https://developers.google.com/analytics/devguides/collection/gajs/)
+library as well as the new
+[`analytics.js`](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
+library. It has one out of the box function, [`trackLinks`](#boba-tracklinks),
+and makes tracking everything else child's play. Requires
+[jQuery](http://jquery.com/).
 
-Create a new instance of Boba
+# Use it
+
+Create a new instance of Boba:
 
 ```js
 tracker = new Boba
 ```
 
-### Constructor options
+## Constructor options
 
-All options are optional.
-
-#### siteName
-
-Default: `'site'`
-
-The name of the site. Can be accessed with `tracker.getSiteName`.
-
-Example:
+All optional.
 
 ```js
 tracker = new Boba({
-  siteName: 'space150'
-})
-```
-
-#### pageName
-
-Default: `'page'`
-
-The name of the page. Can be accessed with `tracker.getPageName`.
-
-Example:
-
-```js
-tracker = new Boba({
-  pageName: 'about'
-})
-```
-
-#### defaultCategory, defaultAction, defaultLabel
-
-Default: `null`
-
-The defaults for the category, action, and label.
-
-Example:
-
-```js
-tracker = new Boba({
-  defaultCategory: "myCategory"
-})
-```
-
-#### watch
-
-Default: `[]`
-
-An array of arguments to apply to the Boba's `watch` method on
-initialization.
-
-Example:
-
-```js
-tracker = new Boba({
+  siteName: 'Mandalore',
+  pageName: 'Slave I',
+  defaultCategory: 'category',
+  defaultAction: 'action',
+  defaultLabel: 'label',
   watch: [
     ['click', '.js-track-foo', trackFoo],
     ['click', '.js-track-bar', trackBar]
@@ -72,28 +36,68 @@ tracker = new Boba({
 })
 ```
 
-### Instance methods
+### siteName, pageName
 
-#### watch
+The name of the site and page, respectively.
+
+You can also get and set `tracker.siteName` and `tracker.pageName` at any time:
+
+```js
+tracker.siteName = 'Mandalore'
+tracker.pageName = 'Slave I'
+```
+
+### defaultCategory, defaultAction, defaultLabel
+
+If an event does not have a category, action, or label, these values will be
+used instead.
+
+You can also change these at any time:
+
+```js
+tracker.defaultCategory = 'category'
+tracker.defaultAction = 'action'
+tracker.defaultLabel = 'label'
+```
+
+### watch
+
+An array of arguments to apply to the [`watch`](#boba-watch) method on
+initialization.
+
+```js
+watch: [
+  ['click', '.js-track-foo', trackFoo],
+  ['click', '.js-track-bar', trackBar]
+]
+```
+
+
+## Instance methods
+
+### Boba#watch
 
 `tracker.watch(eventType, selector, callback)`
 
-This is basically syntactic sugar for:
+This will set up delegated event handlers for you. Under the hood, it does
+something like this:
 
 ```js
 $('body').on(eventType, selector, function(event) {
   tracker.push(callback(event))
-}
+})
 ```
 
-Example:
+#### Examples:
 
 ```js
-tracker.watch('select', '.js-track-select', trackSelect)
+tracker.watch('click', '.js-track', trackClick)
+tracker.watch('change', '.js-track-select', trackSelect)
 ```
 
-The callback is passed a jQuery event object and should return an object like
-the following:
+The callback is passed a
+[jQuery event object](http://api.jquery.com/category/events/event-object/)
+and should return an object with `category`, `action`, and `label` properties:
 
 ```js
 {
@@ -104,56 +108,48 @@ the following:
 ```
 
 Any values not supplied will use defaults from the options (e.g.
-tracker.options.defaultCategory). These default to null.
+`tracker.options.defaultCategory`).
 
-#### trackLinks
+### Boba#trackLinks
 
-`tracker.trackLinks`
-
-This is syntactic sugar doing something like this:
+This is a helper that basically does this:
 
 ```js
 tracker.watch('click', '.js-track', function (event) {
-  return $(event.target).data();
+  return $(event.currentTarget).data()
 })
 ```
 
-TODO: write about data attributes.
+You can use these data attributes to set the category, action, and label when
+using this method:
 
-#### push
+- `data-ga-category`
+- `data-ga-action`
+- `data-ga-label`
 
-`tracker.push`
+You can pass in an alternate selector if you don't want to use `'.js-track'`.
+For example, you could use a data attribute instead of a class:
 
-This can be used to push data manually.
+```js
+tracker.trackLinks('[data-ga-track]')
+```
 
-#### setPageName
+### Boba#push
 
-`tracker.setPageName`
+This can be used to fire events manually.
 
-#### getPageName
+#### Example:
 
-`tracker.getPageName`
-
-#### setSiteName
-
-`tracker.setSiteName`
-
-#### getSiteName
-
-`tracker.getSiteName`
-
-
-### Class methods
-
-#### cleanValue
-
-`Boba.cleanValue`
-
-#### getGA
-
-`Boba.getGA`
+```js
+tracker.push({
+  category: "category",
+  action: "action",
+  label: "label"
+})
+```
 
 
-## Contributing
+# Contributing
 
 See [the contributing guide](CONTRIBUTING.md).
+

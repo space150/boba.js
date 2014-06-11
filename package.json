@@ -1,0 +1,33 @@
+{
+  "name": "boba.js",
+  "version": "0.0.2",
+  "main": "boba.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/space150/boba.js"
+  },
+  "keywords": [
+    "analytics",
+    "tracking"
+  ],
+  "author": "Mike Anderson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/space150/boba.js/issues"
+  },
+  "homepage": "https://space150.github.io/boba.js",
+  "devDependencies": {
+    "gulp": "^3.7.0",
+    "gulp-clean": "^0.3.0",
+    "gulp-compass": "^1.1.9",
+    "gulp-concat": "^2.2.0",
+    "gulp-gh-pages": "^0.3.2",
+    "gulp-markdown": "^0.1.2",
+    "gulp-minify-css": "^0.3.4",
+    "gulp-remove-lines": "^0.1.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.2.5",
+    "gulp-uncss": "^0.4.4",
+    "merge-stream": "^0.1.1"
+  }
+}

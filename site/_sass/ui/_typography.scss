@@ -1,0 +1,31 @@
+/*------------------------------------*\
+    $TYPOGRAPHY
+\*------------------------------------*/
+
+html {
+  font: #{($base-font-size/16px)*1em}/#{$line-height-ratio} $font-body;
+  color: $primary;
+  background-color: $tertiary;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  letter-spacing: 0.01em;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: $primary;
+  text-decoration: underline;
+  &:hover { text-decoration: none; }
+}
+
+i { font-style: normal; }
+
+h1, h2 {         font-weight: 400; }
+h3, h4, h5, h6 { font-weight: 600; }
+
+h1 { @include rem(font-size, 48px); }
+h2 { @include rem(font-size, 32px); }
+h3 { @include rem(font-size, 22px); }
+h4 { @include rem(font-size, 18px); }
+

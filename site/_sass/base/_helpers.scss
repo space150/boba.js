@@ -1,0 +1,79 @@
+/*------------------------------------*\
+    $HELPERS
+\*------------------------------------*/
+
+
+// Clearfix
+.cf {
+  @include clearfix();
+}
+
+// Image replacement
+.ir {
+  @include hide-text();
+}
+
+
+// Hide from screenreaders and browsers
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+// Hiding w/o display:none; for accessibility
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+// Extends the .visuallyhidden class to allow the element to be focusable
+// when navigated to via the keyboard: h5bp.com/p
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+
+// Responsive visibility helpers
+@include media-query(hand-and-down){
+  .hidden-hand-and-down { display: none; }
+}
+@include media-query(hand-and-up){
+  .hidden-hand-and-up { display: none; }
+}
+@include media-query(lap-and-down){
+  .hidden-lap-and-down { display: none; }
+}
+@include media-query(lap-and-up){
+  .hidden-lap-and-up { display: none; }
+}
+@include media-query(desk-and-down){
+  .hidden-desk-and-down { display: none; }
+}
+@include media-query(desk-and-up){
+  .hidden-desk-and-up { display: none; }
+}
+
+
+// Helpers only if it doesn't already have a class to use
+.float-right { float: right !important; }
+.float-left { float: left !important; }
+
+.text-small { font-size: .75em; }
+
+.text-left { text-align: left !important; }
+.text-center { text-align: center !important; }
+.text-right { text-align: right !important; }
+.text-upper { text-transform: uppercase !important; }
+.text-strong { font-weight: bold !important; }
+.text-nowrap { white-space: nowrap !important; }

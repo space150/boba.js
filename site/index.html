@@ -1,0 +1,50 @@
+---
+layout: default
+---
+
+
+<div class="hero">
+  <div class="container">
+    <div class="hero__text">
+      <h1>Boba.js</h1>
+      <p>A JavaScript library for Google&nbsp;Analytics</p>
+      <div class="download-links">
+        <a href="/js/boba.js" class="btn js-track"
+          data-ga-category="Hero"
+          data-ga-action="Click"
+          data-ga-label="Download"
+        >download boba.js</a>
+      </div>
+      <ul class="h-list h-list--piped">
+        <li><a href="https://github.com/space150/boba.js" class="js-track"
+          data-ga-category="Hero"
+          data-ga-action="Click"
+          data-ga-label="GitHub"
+        >github</a></li>
+        <li><a href="https://www.npmjs.org/package/boba.js" class="js-track"
+          data-ga-category="Hero"
+          data-ga-action="Click"
+          data-ga-label="npm"
+        >npm</a></li>
+      </ul>
+    </div>
+    <!--[if (gt IE 8)]><!-->
+      <img src="/img/boba.svg"
+        alt="Boba Fett"
+        class="hero__image"
+      >
+    <!--<![endif]-->
+    <!--[if (lt IE 9)]>
+      <img src="/img/boba.gif"
+        alt="Boba Fett"
+        class="hero__image"
+      >
+    <![endif]-->
+  </div>
+</div>
+<div class="readme">
+  <div class="container">
+    {% include README.html %}
+  </div><!-- end .container -->
+</div><!-- end .readme -->
+
