@@ -49,7 +49,7 @@ initialization.</p>
 <h2 id="instance-methods">Instance methods</h2>
 <h3 id="boba-watch">Boba#watch</h3>
 <p><code>tracker.watch(eventType, selector, callback)</code></p>
-<p>This is sets up delegated event handlers for you. Under the hood, it does
+<p>This will set up delegated event handlers for you. Under the hood, it does
 something like this:</p>
 <pre><code class="lang-js">$(&#39;body&#39;).on(eventType, selector, function(event) {
   tracker.push(callback(event))
