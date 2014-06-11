@@ -79,7 +79,7 @@ watch: [
 
 `tracker.watch(eventType, selector, callback)`
 
-This is sets up delegated event handlers for you. Under the hood, it does
+This will set up delegated event handlers for you. Under the hood, it does
 something like this:
 
 ```js
