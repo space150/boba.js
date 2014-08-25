@@ -18,11 +18,13 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
       defaultLabel: null
     };
 
+    Boba.$ = $ || undefined;
+
     function Boba(opts) {
       this.ga = this._getGA();
       if (typeof this.ga !== "undefined") {
         // Extend defaults with options.
-        this.opts = $.extend(defaults, opts);
+        this.opts = Boba.$.extend(defaults, opts);
 
         // Watch anything defined in the options.
         if (typeof this.opts.watch !== "undefined") {
@@ -34,10 +36,10 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
         this.pageName = this.opts.pageName;
         this.siteName = this.opts.siteName;
 
-        this.trackLinks = $.proxy(this.trackLinks, this);
-        this.push = $.proxy(this.push, this);
-        this.watch = $.proxy(this.watch, this);
-        this._onTrackedClick = $.proxy(this._onTrackedClick, this);
+        this.trackLinks = Boba.$.proxy(this.trackLinks, this);
+        this.push = Boba.$.proxy(this.push, this);
+        this.watch = Boba.$.proxy(this.watch, this);
+        this._onTrackedClick = Boba.$.proxy(this._onTrackedClick, this);
       } else {
         console.warn("Google Analytics not found. Boba could not initialize.");
       }
@@ -55,10 +57,10 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
         var trackingFunction = function(event) {
           this.push(func(event));
         };
-        $("body").on(
+        Boba.$("body").on(
           eventType + ".tracker",
           selector,
-          $.proxy(trackingFunction, this)
+          Boba.$.proxy(trackingFunction, this)
         );
         return this;
       },
@@ -81,7 +83,7 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
 
       _onTrackedClick: function trackClick(event) {
         if (this.ga) {
-          return $(event.currentTarget).data();
+          return Boba.$(event.currentTarget).data();
         }
       },
 

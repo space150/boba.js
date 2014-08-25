@@ -13,15 +13,25 @@ and makes tracking everything else child's play. Requires
 
 # Use it
 
-Create a new instance of Boba:
+Include your GA script and jQuery, then create a new instance of Boba:
 
 ```js
 tracker = new Boba
 ```
 
+If you're using Browserify:
+
+```js
+$ = require("jquery")
+Boba = require("boba.js")
+Boba.$ = $
+
+tracker = new Boba
+```
+
 ## Constructor options
 
-All optional.
+All options are optional.
 
 ```js
 tracker = new Boba({
@@ -31,8 +41,8 @@ tracker = new Boba({
   defaultAction: 'action',
   defaultLabel: 'label',
   watch: [
-    ['click', '.js-track-foo', trackFoo],
-    ['click', '.js-track-bar', trackBar]
+    ['click', '.js-track-solo', trackSolo],
+    ['click', '.js-track-chewie', trackChewie]
   ]
 })
 ```
@@ -68,8 +78,8 @@ initialization.
 
 ```js
 watch: [
-  ['click', '.js-track-foo', trackFoo],
-  ['click', '.js-track-bar', trackBar]
+  ['click', '.js-track-solo', trackSolo],
+  ['click', '.js-track-chewie', trackChewie]
 ]
 ```
 
