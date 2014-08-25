@@ -44,7 +44,7 @@ options = {
 gulp.task("boba-js", function() {
   return gulp.src("./boba.js") // Build window.Boba version.
     .pipe(replace("module.exports", "window.Boba"))
-    .pipe(gulp.dest(paths.jekyll.source + "/js"))
+    .pipe(gulp.dest(paths.jekyll.source + "/js"));
 });
 
 gulp.task("clean", function() {
@@ -85,8 +85,8 @@ gulp.task("app-js", function() {
     .pipe(gulp.dest("./site/js"));
 });
 
-gulp.task("default", [ "clean", "boba-js", "uncss", "app-js", "jekyll" ]);
-gulp.task("dev", ["clean", "boba-js", "uncss", "app-js", "serve"]);
+gulp.task("default", [ "clean", "readme", "boba-js", "uncss", "app-js", "jekyll" ]);
+gulp.task("dev", ["clean", "readme", "boba-js", "uncss", "app-js", "serve"]);
 
 gulp.task("deploy", shell.task([
   "git subtree push --prefix " + paths.jekyll.source + " origin gh-pages"

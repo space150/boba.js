@@ -1,5 +1,6 @@
 <p>Boba.js is a small, easily extensible JavaScript library that makes working
-with Google Analytics easier. It supports the old
+with Google Analytics easier.</p>
+<p>It supports the old
 <a href="https://developers.google.com/analytics/devguides/collection/gajs/"><code>ga.js</code></a>
 library as well as the new
 <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/"><code>analytics.js</code></a>
@@ -7,11 +8,18 @@ library. It has one out of the box function, <a href="#boba-tracklinks"><code>tr
 and makes tracking everything else child&#39;s play. Requires
 <a href="http://jquery.com/">jQuery</a>.</p>
 <h1 id="use-it">Use it</h1>
-<p>Create a new instance of Boba:</p>
+<p>Include your GA script and jQuery, then create a new instance of Boba:</p>
 <pre><code class="lang-js">tracker = new Boba
 </code></pre>
+<p>If you&#39;re using Browserify:</p>
+<pre><code class="lang-js">$ = require(&quot;jquery&quot;)
+Boba = require(&quot;boba.js&quot;)
+Boba.$ = $
+
+tracker = new Boba
+</code></pre>
 <h2 id="constructor-options">Constructor options</h2>
-<p>All optional.</p>
+<p>All options are optional.</p>
 <pre><code class="lang-js">tracker = new Boba({
   siteName: &#39;Mandalore&#39;,
   pageName: &#39;Slave I&#39;,
@@ -19,8 +27,8 @@ and makes tracking everything else child&#39;s play. Requires
   defaultAction: &#39;action&#39;,
   defaultLabel: &#39;label&#39;,
   watch: [
-    [&#39;click&#39;, &#39;.js-track-foo&#39;, trackFoo],
-    [&#39;click&#39;, &#39;.js-track-bar&#39;, trackBar]
+    [&#39;click&#39;, &#39;.js-track-solo&#39;, trackSolo],
+    [&#39;click&#39;, &#39;.js-track-chewie&#39;, trackChewie]
   ]
 })
 </code></pre>
@@ -42,8 +50,8 @@ tracker.defaultLabel = &#39;label&#39;
 <p>An array of arguments to apply to the <a href="#boba-watch"><code>watch</code></a> method on
 initialization.</p>
 <pre><code class="lang-js">watch: [
-  [&#39;click&#39;, &#39;.js-track-foo&#39;, trackFoo],
-  [&#39;click&#39;, &#39;.js-track-bar&#39;, trackBar]
+  [&#39;click&#39;, &#39;.js-track-solo&#39;, trackSolo],
+  [&#39;click&#39;, &#39;.js-track-chewie&#39;, trackChewie]
 ]
 </code></pre>
 <h2 id="instance-methods">Instance methods</h2>
@@ -96,3 +104,4 @@ For example, you could use a data attribute instead of a class:</p>
   label: &quot;label&quot;
 })
 </code></pre>
+<p><img src="http://boba.space150.com/img/boba.gif" alt=""></p>
