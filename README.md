@@ -1,9 +1,9 @@
 # Boba.js
 
-<img src="http://boba.space150.com/img/boba.gif" width="200px" align="right">
-
 Boba.js is a small, easily extensible JavaScript library that makes working
-with Google Analytics easier. It supports the old
+with Google Analytics easier.
+
+It supports the old
 [`ga.js`](https://developers.google.com/analytics/devguides/collection/gajs/)
 library as well as the new
 [`analytics.js`](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
@@ -164,3 +164,4 @@ tracker.push({
 
 See [the contributing guide](CONTRIBUTING.md).
 
+![](http://boba.space150.com/img/boba.gif)
