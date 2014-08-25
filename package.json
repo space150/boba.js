@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/space150/boba.js/issues"
   },
-  "homepage": "https://space150.github.io/boba.js",
+  "homepage": "http://boba.space150.com",
   "devDependencies": {
     "gulp": "^3.7.0",
     "gulp-clean": "^0.3.0",
