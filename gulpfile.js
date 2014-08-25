@@ -9,6 +9,7 @@ var options, paths,
   minifyCSS = require("gulp-minify-css"),
   removeLines = require("gulp-remove-lines"),
   rename = require("gulp-rename"),
+  replace = require("gulp-replace"),
   shell = require("gulp-shell"),
   uncss = require("gulp-uncss");
 
@@ -41,16 +42,9 @@ options = {
 };
 
 gulp.task("boba-js", function() {
-  return merge(
-    gulp.src("./boba.js") // Build window.Boba version.
-      .pipe(removeLines({filters: [ /module.exports/ ]}))
-      .pipe(gulp.dest(paths.jekyll.source + "/js")),
-
-    gulp.src("./boba.js") // Build Browserify version.
-      .pipe(removeLines({filters: [ /window.Boba/ ]}))
-      .pipe(rename("boba-browserify.js"))
-      .pipe(gulp.dest(paths.jekyll.source + "/js"))
-  );
+  return gulp.src("./boba.js") // Build window.Boba version.
+    .pipe(replace("module.exports", "window.Boba"))
+    .pipe(gulp.dest(paths.jekyll.source + "/js"))
 });
 
 gulp.task("clean", function() {

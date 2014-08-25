@@ -100,5 +100,4 @@
     return Boba;
   }());
   module.exports = Boba;
-  window.Boba = Boba;
 }());
