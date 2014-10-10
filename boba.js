@@ -65,7 +65,8 @@
         data = [
           data.gaCategory || data.category || this.opts.defaultCategory,
           data.gaAction   || data.action   || this.opts.defaultAction,
-          data.gaLabel    || data.label    || this.opts.defaultLabel
+          data.gaLabel    || data.label    || this.opts.defaultLabel,
+          data.gaValue    || data.value    || null
         ];
         this.ga.apply(null, data);
         return this;

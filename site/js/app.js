@@ -75,7 +75,8 @@ x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.ke
         data = [
           data.gaCategory || data.category || this.opts.defaultCategory,
           data.gaAction   || data.action   || this.opts.defaultAction,
-          data.gaLabel    || data.label    || this.opts.defaultLabel
+          data.gaLabel    || data.label    || this.opts.defaultLabel,
+          data.gaValue    || data.value    || null
         ];
         this.ga.apply(null, data);
         return this;

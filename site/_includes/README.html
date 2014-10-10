@@ -69,11 +69,13 @@ tracker.watch(&#39;change&#39;, &#39;.js-track-select&#39;, trackSelect)
 </code></pre>
 <p>The callback is passed a
 <a href="http://api.jquery.com/category/events/event-object/">jQuery event object</a>
-and should return an object with <code>category</code>, <code>action</code>, and <code>label</code> properties:</p>
+and should return an object with <code>category</code>, <code>action</code>, <code>label</code>, and <code>value</code>
+properties:</p>
 <pre><code class="lang-js">{
   category: &quot;category&quot;,
   action: &quot;action&quot;,
-  label: &quot;label&quot;
+  label: &quot;label&quot;,
+  value: 42
 }
 </code></pre>
 <p>Any values not supplied will use defaults from the options (e.g.
@@ -84,12 +86,13 @@ and should return an object with <code>category</code>, <code>action</code>, and
   return $(event.currentTarget).data()
 })
 </code></pre>
-<p>You can use these data attributes to set the category, action, and label when
-using this method:</p>
+<p>You can use these data attributes to set the category, action, label, and value
+when using this method:</p>
 <ul>
 <li><code>data-ga-category</code></li>
 <li><code>data-ga-action</code></li>
 <li><code>data-ga-label</code></li>
+<li><code>data-ga-value</code></li>
 </ul>
 <p>You can pass in an alternate selector if you don&#39;t want to use <code>&#39;.js-track&#39;</code>.
 For example, you could use a data attribute instead of a class:</p>
@@ -101,6 +104,7 @@ For example, you could use a data attribute instead of a class:</p>
 <pre><code class="lang-js">tracker.push({
   category: &quot;category&quot;,
   action: &quot;action&quot;,
-  label: &quot;label&quot;
+  label: &quot;label&quot;,
+  value: 42
 })
 </code></pre>

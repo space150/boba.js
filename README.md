@@ -108,13 +108,15 @@ tracker.watch('change', '.js-track-select', trackSelect)
 
 The callback is passed a
 [jQuery event object](http://api.jquery.com/category/events/event-object/)
-and should return an object with `category`, `action`, and `label` properties:
+and should return an object with `category`, `action`, `label`, and `value`
+properties:
 
 ```js
 {
   category: "category",
   action: "action",
-  label: "label"
+  label: "label",
+  value: 42
 }
 ```
 
@@ -131,12 +133,13 @@ tracker.watch('click', '.js-track', function (event) {
 })
 ```
 
-You can use these data attributes to set the category, action, and label when
-using this method:
+You can use these data attributes to set the category, action, label, and value
+when using this method:
 
 - `data-ga-category`
 - `data-ga-action`
 - `data-ga-label`
+- `data-ga-value`
 
 You can pass in an alternate selector if you don't want to use `'.js-track'`.
 For example, you could use a data attribute instead of a class:
@@ -155,7 +158,8 @@ This can be used to fire events manually.
 tracker.push({
   category: "category",
   action: "action",
-  label: "label"
+  label: "label",
+  value: 42
 })
 ```
 
