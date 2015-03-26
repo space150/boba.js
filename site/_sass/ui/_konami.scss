@@ -1,8 +1,0 @@
-@-webkit-keyframes TRIPPY {
-  from { -webkit-filter: sepia(50%) saturate(300%) hue-rotate(0deg); }
-  to { -webkit-filter:   sepia(50%) saturate(300%) hue-rotate(360deg); }
-}
-
-.hero__image.trippy {
-  -webkit-animation: TRIPPY 1s linear infinite;
-}
