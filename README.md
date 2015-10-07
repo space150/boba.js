@@ -16,17 +16,17 @@ and makes tracking everything else child's play. Requires
 Include your GA script and jQuery, then create a new instance of Boba:
 
 ```js
-tracker = new Boba
+tracker = new Boba()
 ```
 
 If you're using Browserify:
 
 ```js
-$ = require("jquery")
-Boba = require("boba.js")
+$ = require('jquery')
+Boba = require('boba.js')
 Boba.$ = $
 
-tracker = new Boba
+tracker = new Boba()
 ```
 
 ## Constructor options
@@ -113,9 +113,9 @@ properties:
 
 ```js
 {
-  category: "category",
-  action: "action",
-  label: "label",
+  category: 'category',
+  action: 'action',
+  label: 'label',
   value: 42
 }
 ```
@@ -156,16 +156,11 @@ This can be used to fire events manually.
 
 ```js
 tracker.push({
-  category: "category",
-  action: "action",
-  label: "label",
+  category: 'category',
+  action: 'action',
+  label: 'label',
   value: 42
 })
 ```
-
-
-# Contributing
-
-See [the contributing guide](CONTRIBUTING.md).
 
 ![](http://boba.space150.com/img/boba.gif)
